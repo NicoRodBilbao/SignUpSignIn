@@ -43,5 +43,14 @@
         <PasswordField fx:id="tfPassword" layoutX="62.0" layoutY="375.0" prefHeight="26.0" prefWidth="219.0" style="-fx-background-color: #3a3a3a; -fx-text-inner-color: white;" />
       <Separator layoutX="62.0" layoutY="220.0" prefHeight="0.0" prefWidth="219.0" />
       <Separator layoutX="62.0" layoutY="400.0" prefHeight="0.0" prefWidth="219.0" />
+      <Button fx:id="btnDarkMode" layoutX="730.0" layoutY="24.0" maxHeight="35.0" maxWidth="61.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="61.0" style="-fx-background-color: #333333;" text="Button">
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="33.0">
+               <image>
+                  <Image url="@sol2.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
     </children>
 </Pane>
