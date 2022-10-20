@@ -7,11 +7,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label alignment="CENTER" layoutX="86.0" layoutY="138.0" prefHeight="194.0" prefWidth="628.0" text="Welcome &quot;Username&quot; to our application's main page!" textFill="WHITE">
+      <Label alignment="CENTER" layoutX="86.0" layoutY="203.0" prefHeight="194.0" prefWidth="629.0" text="Welcome &quot;Username&quot; to our application's main page!" textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <font>
-            <Font size="24.0" />
+            <Font size="30.0" />
          </font>
       </Label>
       <Button fx:id="btnLogOut" layoutX="671.0" layoutY="530.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: #2f99ff;" text="Log out" textFill="WHITE">

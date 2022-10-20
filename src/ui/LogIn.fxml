@@ -18,12 +18,12 @@
          <font>
             <Font name="Calibri Bold" size="17.0" />
          </font></Button>
-        <Label fx:id="lblUsername" layoutX="447.0" layoutY="165.0" prefHeight="43.0" prefWidth="219.0" text="Username" textFill="WHITE">
+        <Label fx:id="lblUsername" layoutX="447.0" layoutY="178.0" prefHeight="43.0" prefWidth="219.0" text="Username" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <TextField fx:id="tfUsername" layoutX="447.0" layoutY="208.0" prefHeight="25.0" prefWidth="219.0" style="-fx-background-color: #3a3a3a; -fx-text-inner-color: white;">
+        <TextField fx:id="tfUsername" layoutX="447.0" layoutY="221.0" prefHeight="25.0" prefWidth="219.0" style="-fx-background-color: #3a3a3a; -fx-text-inner-color: white;">
          <opaqueInsets>
             <Insets />
          </opaqueInsets></TextField>
@@ -32,16 +32,16 @@
                 <Font size="18.0" />
             </font>
         </Label>
-        <Button fx:id="btnLogIn" layoutX="566.0" layoutY="467.0" mnemonicParsing="false" onAction="#handleLogInButtonAction" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: #2f99ff;" text="Log In" textFill="WHITE">
+        <Button fx:id="btnLogIn" layoutX="566.0" layoutY="467.0" mnemonicParsing="false" onAction="#handleLogInButtonAction" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: #eeeeee;" text="Log In" textFill="#333333">
          <font>
             <Font name="Calibri Bold" size="17.0" />
          </font></Button>
         <PasswordField fx:id="tfPassword" layoutX="447.0" layoutY="339.0" prefHeight="26.0" prefWidth="219.0" style="-fx-background-color: #3a3a3a; -fx-text-inner-color: white;" />
-      <Separator fx:id="decorUsername" layoutX="445.0" layoutY="234.0" prefHeight="0.0" prefWidth="219.0" />
+      <Separator fx:id="decorUsername" layoutX="445.0" layoutY="247.0" prefHeight="0.0" prefWidth="219.0" />
       <Separator fx:id="decorPassword" layoutX="445.0" layoutY="364.0" prefHeight="0.0" prefWidth="219.0" />
-      <Button fx:id="btnDarkMode" layoutX="730.0" layoutY="24.0" maxHeight="35.0" maxWidth="61.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="61.0" style="-fx-background-color: #333333;" />
+      <Button fx:id="btnDarkMode" alignment="CENTER" layoutX="741.0" layoutY="24.0" maxHeight="35.0" maxWidth="61.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: #333333;" textAlignment="CENTER" />
       <Rectangle fx:id="decoLogo" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" height="572.0" layoutX="14.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="304.0" />
-      <ImageView fx:id="ImgLogo" fitHeight="150.0" fitWidth="200.0" layoutX="91.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgLogo" fitHeight="150.0" fitWidth="200.0" layoutX="91.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@ImagenParaLogInWindow.png" />
          </image>
@@ -51,7 +51,7 @@
             <Image url="@sol_dark_mode.png" />
          </image>
       </ImageView>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="317.0" layoutY="59.0" prefHeight="75.0" prefWidth="484.0" text="Sign In!" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="lblTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="317.0" layoutY="59.0" prefHeight="75.0" prefWidth="484.0" text="Sign In!" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font size="64.0" />
          </font>
