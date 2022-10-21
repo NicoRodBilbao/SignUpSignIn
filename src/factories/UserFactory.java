@@ -1,14 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package factories;
+
+import dataAccess.UserImplementation;
+import interfaces.Userable;
 
 /**
  *
- * @author nikol
+ * @author Nicolas Rodriguez
  */
 public class UserFactory {
-    
+
+    private static Userable user = new UserImplementation();
+
+    public static Userable getAccessUser() {
+        return user;
+    }
 }
