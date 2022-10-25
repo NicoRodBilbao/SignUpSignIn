@@ -26,21 +26,17 @@ public class ApplicationWindowController {
 
 	@FXML
 	private User user;
-        @FXML
+	@FXML
 	private Label lblWelcome;
-        @FXML
+	@FXML
 	private Button btnLogOut;
-        
-        private Stage stage;
-        
-        public void setStage(Stage stage) {
-            this.stage = stage;
-        }
-
-	public ApplicationWindowController(User user) {
-		this.user = user;
+	
+	private Stage stage;
+	
+	public void setStage(Stage stage) {
+	    this.stage = stage;
 	}
-
+	
 	public void initStage(Parent root) {
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
@@ -50,16 +46,20 @@ public class ApplicationWindowController {
 		btnLogOut.setOnAction(this::handleButtonLogOutAction);
 		stage.show();
 	}
-
+	
 	private void handleWindowShowing(WindowEvent event) {
 		String welcomeText = lblWelcome.getText();
 		lblWelcome.setText(welcomeText.replace("Username", user.getLogin()));
 		btnLogOut.setTooltip(
 				new Tooltip("Pulsa para salir"));
 	}
-
-	private void handleButtonLogOutAction() {
+	
+	private void handleButtonLogOutAction(ActionEvent event) {
 		//TODO kill the app
 	}
 
+    public void initData(User u) {
+        this.user = u;
+    }
+	
 }
