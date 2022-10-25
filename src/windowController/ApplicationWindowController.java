@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package windowController;
 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -14,39 +10,40 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import model.User;
+
 /**
  *
- * @author nikol
+ * @author joana, markel
  */
 public class ApplicationWindowController extends Application {
+	
+	private User user;
+	private Label lblWelcome;
     
+	public ApplicationWindowController(User user) {
+		this.user = user;
+	}
+	
+	public void initStage(Parent root) {
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.setTitle("Welcome");
+		stage.setResizable(false);
+		stage.setOnShowing(this::setUsername);
+	}
+	
+	private void setUsername() {
+		String welcomeText = lblWelcome.getText();
+		lblWelcome.setText(welcomeText.replace("Username", user.getLogin()));
+	}
+	
     @Override
     public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
-        
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        
-        Scene scene = new Scene(root, 300, 250);
-        
-        primaryStage.setTitle("Hello World!");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        launch(args);
+    	FXMLLoader loader = new FXMLLoader(
+    			getClass.getResource("ui/ApplicationWindow"));
+    	Parent root = (Parent) loader.load();
+    	
     }
     
 }
