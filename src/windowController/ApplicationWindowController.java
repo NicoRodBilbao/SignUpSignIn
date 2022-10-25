@@ -20,6 +20,7 @@ public class ApplicationWindowController extends Application {
 	
 	private User user;
 	private Label lblWelcome;
+	private Button btnLogOut;
     
 	public ApplicationWindowController(User user) {
 		this.user = user;
@@ -31,11 +32,17 @@ public class ApplicationWindowController extends Application {
 		stage.setTitle("Welcome");
 		stage.setResizable(false);
 		stage.setOnShowing(this::setUsername);
+		btnLogOut.setOnAction(this::logOut);
+		stage.show();
 	}
 	
 	private void setUsername() {
 		String welcomeText = lblWelcome.getText();
 		lblWelcome.setText(welcomeText.replace("Username", user.getLogin()));
+	}
+	
+	private void logOut() {
+		//TODO kill the app
 	}
 	
     @Override
