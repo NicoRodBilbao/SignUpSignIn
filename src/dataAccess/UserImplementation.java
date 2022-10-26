@@ -17,7 +17,7 @@ public class UserImplementation implements Userable{
 
     @Override
     public void signUp(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
