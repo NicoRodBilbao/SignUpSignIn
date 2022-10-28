@@ -2,6 +2,8 @@ package windowController;
 
 import exceptions.IncorrectUserException;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 
 import javafx.event.ActionEvent;
@@ -33,7 +35,9 @@ public class ApplicationWindowController {
 
     private final Image dmImg = new Image("ui/sol_dark_mode.png");
     private final Image lmImg = new Image("ui/sol_light_mode.png");
+    protected final Logger LOGGER = Logger.getLogger(SignUpWindowController.class.getName());
 
+    
     @FXML
     private Pane paneMain;
     @FXML
@@ -59,6 +63,7 @@ public class ApplicationWindowController {
      * @param root There parent of all the children on the scene
      */
     public void initStage(Parent root) {
+        LOGGER.info("Initializing the ApplicationWindow");
         try {
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -75,6 +80,7 @@ public class ApplicationWindowController {
     }
 
     private void handleWindowShowing(WindowEvent event) {
+        LOGGER.info("Beggining ApplicationWindowController::handleWindowShowing");
         try {
             String welcomeText = lblWelcome.getText();
             lblWelcome.setText(welcomeText.replace("Username", user.getLogin()));
@@ -86,6 +92,7 @@ public class ApplicationWindowController {
     }
 
     private void handleDarkModeButtonAction(ActionEvent event) {
+        LOGGER.info("Beggining ApplicationWindowController::handleDarkModeButtonAction");
         try {
             int i = 53, j = 18;
             // Si pulsas el botón, comprueba el tema que tiene la ventana. 
@@ -110,6 +117,7 @@ public class ApplicationWindowController {
     }
 
     private void handleLogOutAction(ActionEvent event) {
+        LOGGER.info("Beggining ApplicationWindowController::handleLogOutAction");
         try {
             // Carga el document FXML y obtiene un objeto Parent
             FXMLLoader loader = new FXMLLoader(
@@ -126,6 +134,7 @@ public class ApplicationWindowController {
     }
 
     private void handleExitAction(WindowEvent event) {
+        LOGGER.info("Beggining ApplicationWindowController::handleExitAction");
         try {
             Platform.exit();
         } catch (Exception e) {
@@ -134,6 +143,7 @@ public class ApplicationWindowController {
     }
 
     private void showError(String msg) {
+        LOGGER.log(Level.SEVERE, "ERROR: {0}", msg);
         Alert alert = new Alert(Alert.AlertType.ERROR, msg);
         alert.showAndWait()
                 .filter(response -> response == ButtonType.OK);
@@ -146,6 +156,7 @@ public class ApplicationWindowController {
      * @param u The user that has logged in
      */
     public void initData(User u) {
+        LOGGER.info("Beggining ApplicationWindowController::initData");
         try {
             //TODO Parametrizar excepciones
             if (u == null) {
