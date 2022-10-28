@@ -8,7 +8,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
@@ -64,7 +66,7 @@ public class ApplicationWindowController {
                 try {
                         // Carga el document FXML y obtiene un objeto Parent
                         FXMLLoader loader = new FXMLLoader(
-                            getClass().getResource("/ui/LogIn.fxml"));
+                            getClass().getResource("/ui/LogInWindow.fxml"));
                         Parent root = (Parent) loader.load();
       
                         LogInWindowController controller =
@@ -72,13 +74,19 @@ public class ApplicationWindowController {
                         controller.setStage(stage);
                         controller.initStage(root);
                 } catch (IOException e) {
-                    
+                        showError(e.getMessage());
                 }
         }
 	
 	private void handleExitAction(WindowEvent event) {
 		Platform.exit();
 	}
+        
+        private void showError(String msg) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, msg);
+                alert.showAndWait()
+                        .filter(response -> response == ButtonType.OK);
+        }
 
         public void initData(User u) {
                 this.user = u;
