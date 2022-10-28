@@ -2,6 +2,7 @@ package windowController;
         
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.application.Platform;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -30,6 +31,8 @@ public class ApplicationWindowController {
 	private Label lblWelcome;
 	@FXML
 	private Button btnLogOut;
+        @FXML
+        private Button btnDarkMode;
 	
 	private Stage stage;
 	
@@ -43,7 +46,9 @@ public class ApplicationWindowController {
 		stage.setTitle("Welcome");
 		stage.setResizable(false);
 		stage.setOnShowing(this::handleWindowShowing);
-		btnLogOut.setOnAction(this::handleButtonLogOutAction);
+		btnLogOut.setOnAction(this::handleLogOutAction);
+                btnDarkMode.setOnAction(this::toggleTheme);
+                stage.setOnCloseRequest(this::handleExitAction);
 		stage.show();
 	}
 	
@@ -53,13 +58,21 @@ public class ApplicationWindowController {
 		btnLogOut.setTooltip(
 				new Tooltip("Pulsa para salir"));
 	}
+        
+        private void toggleTheme(ActionEvent event) {
+                //TODO
+        }
+        
+        private void handleLogOutAction(ActionEvent event) {
+                //TODO
+        }
 	
-	private void handleButtonLogOutAction(ActionEvent event) {
-		//TODO kill the app
+	private void handleExitAction(WindowEvent event) {
+		Platform.exit();
 	}
 
-    public void initData(User u) {
-        this.user = u;
-    }
+        public void initData(User u) {
+                this.user = u;
+        }
 	
 }
