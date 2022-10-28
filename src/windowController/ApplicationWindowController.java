@@ -1,11 +1,9 @@
 package windowController;
         
-import javafx.application.Application;
-import static javafx.application.Application.launch;
+import java.io.IOException;
 import javafx.application.Platform;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -56,7 +53,7 @@ public class ApplicationWindowController {
 		String welcomeText = lblWelcome.getText();
 		lblWelcome.setText(welcomeText.replace("Username", user.getLogin()));
 		btnLogOut.setTooltip(
-				new Tooltip("Pulsa para salir"));
+                    new Tooltip("Pulsa para salir"));
 	}
         
         private void toggleTheme(ActionEvent event) {
@@ -64,7 +61,19 @@ public class ApplicationWindowController {
         }
         
         private void handleLogOutAction(ActionEvent event) {
-                //TODO
+                try {
+                        // Carga el document FXML y obtiene un objeto Parent
+                        FXMLLoader loader = new FXMLLoader(
+                            getClass().getResource("/ui/LogIn.fxml"));
+                        Parent root = (Parent) loader.load();
+      
+                        LogInWindowController controller =
+                            (LogInWindowController)loader.getController();
+                        controller.setStage(stage);
+                        controller.initStage(root);
+                } catch (IOException e) {
+                    
+                }
         }
 	
 	private void handleExitAction(WindowEvent event) {
