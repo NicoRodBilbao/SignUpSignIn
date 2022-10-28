@@ -60,7 +60,7 @@ public class UserImplementation implements Userable{
             // We get an answer in case we get any exception
             pack = (Package)auxIn.readObject();
             skClient.close();
-            if (pack.getMessaage().equals(Message.USERDOESNOTEXIST))
+            if (pack.getMessage().equals(Message.USERDOESNOTEXIST))
                 throw new UserDoesNotExistException();
             return pack.getUser();
         } catch (IOException e) {
@@ -96,9 +96,9 @@ public class UserImplementation implements Userable{
             // We get an answer in case we get any exception
             pack = (Package)auxIn.readObject();
             skClient.close();
-            if (pack.getMessaage().equals(Message.USERALREADYEXISTS))
+            if (pack.getMessage().equals(Message.USERALREADYEXISTS))
                 throw new UserAlreadyExistsException();
-             if (pack.getMessaage().equals(Message.EMAILALREADYEXISTS))
+             if (pack.getMessage().equals(Message.EMAILALREADYEXISTS))
                  throw new EmailAlreadyExistsException();
         } catch (IOException e) {
             LOGGER.severe("Input Output exception thrown." + e.getMessage());
