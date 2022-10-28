@@ -46,7 +46,7 @@ public class SignUpWindowController {
     private Stage stage;
     private final Image dmImg = new Image("ui/sol_dark_mode.png");
     private final Image lmImg = new Image("ui/sol_light_mode.png");
-    protected Logger logger = Logger.getLogger(SignUpWindowController.class.getName());
+    protected final Logger LOGGER = Logger.getLogger(SignUpWindowController.class.getName());
     @FXML
     private Pane paneMain;
     @FXML
@@ -68,7 +68,7 @@ public class SignUpWindowController {
      * @param root There parent of all the children on the scene
      */
     public void initStage(Parent root) {
-        logger.info("Initializing SignUp stage.");
+        LOGGER.info("Initializing SignUp stage.");
         Scene scene = new Scene(root);
         stage.setScene(scene);
         // , se le pondrá el título de “Sign Up” a la ventana
@@ -90,36 +90,36 @@ public class SignUpWindowController {
         stage.show();
 
     }
-        
+
     private void textChange(EventType<KeyEvent> KEY_TYPED) {
-        if(!tfUsername.getText().trim().isEmpty() &&
-           !tfEmail.getText().trim().isEmpty() &&
-           !tfFullName.getText().trim().isEmpty() &&
-           !tfPassword.getText().trim().isEmpty() &&
-           !tfRepeatPassword.getText().trim().isEmpty()){
+        if (!tfUsername.getText().trim().isEmpty()
+                && !tfEmail.getText().trim().isEmpty()
+                && !tfFullName.getText().trim().isEmpty()
+                && !tfPassword.getText().trim().isEmpty()
+                && !tfRepeatPassword.getText().trim().isEmpty()) {
             btnSignUp.setDisable(false);
         }
-        if(tfUsername.getText().trim().isEmpty() ||
-           tfEmail.getText().trim().isEmpty() ||
-           tfFullName.getText().trim().isEmpty() ||
-           tfPassword.getText().trim().isEmpty() ||
-           tfRepeatPassword.getText().trim().isEmpty()){
+        if (tfUsername.getText().trim().isEmpty()
+                || tfEmail.getText().trim().isEmpty()
+                || tfFullName.getText().trim().isEmpty()
+                || tfPassword.getText().trim().isEmpty()
+                || tfRepeatPassword.getText().trim().isEmpty()) {
             btnSignUp.setDisable(true);
         }
     }
-    
+
     private boolean validateFieldString(String txtValidate) {
         Boolean flag = true;
-        if (txtValidate.contains(" ")||txtValidate.length()>=30) {
-            flag=!flag;
+        if (txtValidate.contains(" ") || txtValidate.length() >= 30) {
+            flag = !flag;
         }
         return flag;
     }
-    
+
     private boolean validateEmail(String txtEmail) { // TODO validar patrón de Email
         return true;
     }
-    
+
     @FXML
     /**
      * This method validates the TextfFields and executes signUp() if ir works
@@ -128,68 +128,74 @@ public class SignUpWindowController {
      * @param event The observed event
      */
     private void handleSignUpButtonAction(ActionEvent event) {
-            /*Se validará el campo tfUsername.
+        /*Se validará el campo tfUsername.
             En caso de que no se valide con más
             de 30 caracteres o que haya
             espacios en blanco, lanza
             IncorrectUserException.*/
-            try {
-         if (validateFieldString(tfUsername.getText())) {
-             /* Se validará el campo tfPassword.
+        try {
+            if (!validateFieldString(tfUsername.getText())) {
+                decorUsername.setStyle("-fx-background-color:RED;");
+                throw new IncorrectUserException(); // tfUsername fails !!parameterize exception
+            }
+            /* Se validará el campo tfPassword.
                 En caso de que no valide con más de
                 30 caracteres o que haya espacios
                 en blanco, lanza
                 IncorrectPasswordException*/
-             if (validateFieldString(tfPassword.getText())) {
-                 /*Se validará el campo de tfRepeatPassword.
+            if (validateFieldString(tfPassword.getText())) {
+                decorPassword.setStyle("-fx-background-color:RED;");
+                throw new IncorrectPasswordException(); // tfPassword fails !!parameterize exception 
+            }
+            /*Se validará el campo de tfRepeatPassword.
                     En caso de que no valide con más de
                     30 caracteres o que haya espacios
                     en blanco, lanza
                     IncorrectPasswordException.*/
-                 if (validateFieldString(tfRepeatPassword.getText())) {
-                     /*Se validará el campo tfEmail.
+            if (validateFieldString(tfRepeatPassword.getText())) {
+                decorRepeatPassword.setStyle("-fx-background-color:RED;");
+                throw new IncorrectPasswordException(); // tfRepeatPassword fails !!parameterize exception
+            }
+            /*Se validará el campo tfEmail.
                         En caso de que no sea válido con un
                         formato correcto, lanza
                         EmailAlreadyExistsException.*/
-                     if (validateEmail(tfEmail.getText())) {
-                         /*Se validará que la tfPassword y
+            if (validateEmail(tfEmail.getText())) {
+                decorEmail.setStyle("-fx-background-color:RED;");
+                throw new EmailAlreadyExistsException(); // tfEmail fails
+            }
+            /*Se validará que la tfPassword y
                             tfRepeatPassword sean iguales.
                             En el caso de que el tfPassword
                             como el tfRepeatPassword sean
                             distintos, lanza IncorrectPasswordException.*/
-                         if (tfPassword.getText().equals(tfRepeatPassword.getText())){
-                             /*Se validará el campo de tfFullName.
+            if (tfPassword.getText().equals(tfRepeatPassword.getText())) {
+                decorPassword.setStyle("-fx-background-color:RED;");
+                decorRepeatPassword.setStyle("-fx-background-color:RED;");
+                throw new IncorrectPasswordException(); // tfPassword and tfRepeatPassword don't contain the same string !!parameterize exception
+            }
+            /*Se validará el campo de tfFullName.
                                 En caso de que no valide con más de
                                 50 caracteres lanza
                                 IncorrectUserException.*/
-                             if (tfFullName.getText().length()<=50) {
-                                 //Integer id, String login, String email, String fullName, UserStatus status, UserPrivilege privilege, String password
-                                 User user = new User(0, // generic if
-                                         tfUsername.getText(),
-                                         tfEmail.getText(),
-                                         tfFullName.getText(),
-                                         UserStatus.ENABLED,
-                                         UserPrivilege.USER,
-                                         tfPassword.getText());
-                                 dao.signUp(user);
-                                 new Alert(Alert.AlertType.INFORMATION, "The user has been successfully registered.", ButtonType.OK).showAndWait();
-                                 //En caso de que alguna validación sea errónea. 
-                             } else decorFullName.setStyle("-fx-background-color:RED;");
-                                 throw new IncorrectUserException(); // tfFullName fails !!parameterize exception
-                         }else decorPassword.setStyle("-fx-background-color:RED;");
-                                 decorRepeatPassword.setStyle("-fx-background-color:RED;");
-                             throw new IncorrectPasswordException(); // tfPassword and tfRepeatPassword don't contain the same string !!parameterize exception
-                     } else decorEmail.setStyle("-fx-background-color:RED;");
-                         throw new EmailAlreadyExistsException(); // tfEmail fails
-                 }else decorRepeatPassword.setStyle("-fx-background-color:RED;");
-                     throw new IncorrectPasswordException(); // tfRepeatPassword fails !!parameterize exception
-             } else decorPassword.setStyle("-fx-background-color:RED;");
-                 throw new IncorrectPasswordException(); // tfPassword fails !!parameterize exception
-         } else decorUsername.setStyle("-fx-background-color:RED;");
-             throw new IncorrectUserException(); // tfUsername fails !!parameterize exception
-            } catch(Exception e) {
-                new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
+            if (tfFullName.getText().length() <= 50) {
+                decorFullName.setStyle("-fx-background-color:RED;");
+                throw new IncorrectUserException(); // tfFullName fails !!parameterize exception
             }
+            //Integer id, String login, String email, String fullName, UserStatus status, UserPrivilege privilege, String password
+            User user = new User(0, // generic id
+                    tfUsername.getText(),
+                    tfEmail.getText(),
+                    tfFullName.getText(),
+                    UserStatus.ENABLED,
+                    UserPrivilege.USER,
+                    tfPassword.getText());
+            dao.signUp(user);
+            new Alert(Alert.AlertType.INFORMATION, "The user has been successfully registered.", ButtonType.OK).showAndWait();
+            //En caso de que alguna validación sea errónea. 
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
+        }
     }
 
     @FXML
@@ -200,17 +206,18 @@ public class SignUpWindowController {
      */
     private void handleGoBackButtonAction(ActionEvent event) {  //! TODO probar el funcionamiento con las ventanas de otros integrantes
         try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/LogIn.fxml"));
-         // Carga el document FXML y obtiene un objeto Parent
-        Parent root = (Parent)loader.load();
-        
-        SignUpWindowController controller = 
-                ((SignUpWindowController)loader.getController());
-        controller.setStage(new Stage());
-        controller.initStage(root);
-        Platform.exit();
-        } catch(IOException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK);
+            Stage secondaryStage = new Stage();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/LogInWindow.fxml"));
+            // Carga el document FXML y obtiene un objeto Parent
+            Parent root = (Parent) loader.load();
+
+            LogInWindowController controller
+                    = ((LogInWindowController) loader.getController());
+            controller.setStage(secondaryStage);
+            controller.initStage(root);
+            stage.close();
+        } catch (IOException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
         }
     }
 
@@ -327,7 +334,7 @@ public class SignUpWindowController {
      * @param event The event listened
      */
     private void handleSignUpWindowShowing(WindowEvent event) {
-        logger.info("Beggining SignInWindowController::handleSignUpWindowShowing");
+        LOGGER.info("Beggining SignInWindowController::handleSignUpWindowShowing");
         //  btnSignUp estará deshabilitado
         btnSignUp.setDisable(true);
         //  el btnGoBack estará habilitado
