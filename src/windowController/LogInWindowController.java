@@ -34,7 +34,7 @@ import model.User;
 
 /**
  *
- * @author Markel Fernandez
+ * @author Markel Fernandez, Joana
  */
 public class LogInWindowController{
     Stage primaryStage;
