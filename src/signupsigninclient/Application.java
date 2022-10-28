@@ -22,7 +22,7 @@ public class Application extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws Exception {
         // Carga el document FXML y obtiene un objeto Parent
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/LogIn.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/LogInWindow.fxml"));
         // Crea una escena a partir del Parent
         Parent root = (Parent)loader.load();
         LogInWindowController controller = (LogInWindowController) loader.getController();
