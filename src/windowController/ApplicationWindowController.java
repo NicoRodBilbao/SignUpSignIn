@@ -1,52 +1,95 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package windowController;
+        
+import java.io.IOException;
+import javafx.application.Platform;
 
-import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+
+import model.User;
 
 /**
  *
- * @author nikol
+ * @author joana, markel
  */
-public class ApplicationWindowController extends Application {
-    
-    @Override
-    public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
-        
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        
-        Scene scene = new Scene(root, 300, 250);
-        
-        primaryStage.setTitle("Hello World!");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
+public class ApplicationWindowController {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        launch(args);
-    }
-    
+	@FXML
+	private User user;
+	@FXML
+	private Label lblWelcome;
+	@FXML
+	private Button btnLogOut;
+        @FXML
+        private Button btnDarkMode;
+	
+	private Stage stage;
+	
+	public void setStage(Stage stage) {
+	    this.stage = stage;
+	}
+	
+	public void initStage(Parent root) {
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.setTitle("Welcome");
+		stage.setResizable(false);
+		stage.setOnShowing(this::handleWindowShowing);
+		btnLogOut.setOnAction(this::handleLogOutAction);
+                btnDarkMode.setOnAction(this::toggleTheme);
+                stage.setOnCloseRequest(this::handleExitAction);
+		stage.show();
+	}
+	
+	private void handleWindowShowing(WindowEvent event) {
+		String welcomeText = lblWelcome.getText();
+		lblWelcome.setText(welcomeText.replace("Username", user.getLogin()));
+		btnLogOut.setTooltip(
+                    new Tooltip("Pulsa para salir"));
+	}
+        
+        private void toggleTheme(ActionEvent event) {
+                //TODO
+        }
+        
+        private void handleLogOutAction(ActionEvent event) {
+                try {
+                        // Carga el document FXML y obtiene un objeto Parent
+                        FXMLLoader loader = new FXMLLoader(
+                            getClass().getResource("/ui/LogInWindow.fxml"));
+                        Parent root = (Parent) loader.load();
+      
+                        LogInWindowController controller =
+                            (LogInWindowController)loader.getController();
+                        controller.setStage(stage);
+                        controller.initStage(root);
+                } catch (IOException e) {
+                        showError(e.getMessage());
+                }
+        }
+	
+	private void handleExitAction(WindowEvent event) {
+		Platform.exit();
+	}
+        
+        private void showError(String msg) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, msg);
+                alert.showAndWait()
+                        .filter(response -> response == ButtonType.OK);
+        }
+
+        public void initData(User u) {
+                this.user = u;
+        }
+	
 }
