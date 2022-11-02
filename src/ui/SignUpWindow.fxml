@@ -11,7 +11,8 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="paneMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="paneMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+fx:controller="windowController.SignUpWindowController">
    <children>
       <Label fx:id="lblUsername" layoutX="435.0" layoutY="85.0" prefHeight="35.0" prefWidth="253.0" text="Username" textFill="WHITE">
          <font>
@@ -41,14 +42,6 @@
       <TextField fx:id="tfUsername" layoutX="435.0" layoutY="120.0" prefHeight="25.0" prefWidth="253.0" style="-fx-background-color: #3a3a3a; -fx-text-inner-color: white;" />
       <TextField fx:id="tfEmail" layoutX="435.0" layoutY="195.0" prefHeight="25.0" prefWidth="253.0" style="-fx-background-color: #3a3a3a; -fx-text-inner-color: white;" />
       <TextField fx:id="tfFullName" layoutX="435.0" layoutY="267.0" prefHeight="25.0" prefWidth="253.0" style="-fx-background-color: #3a3a3a; -fx-text-inner-color: white;" />
-      <Button fx:id="btnSignUp" layoutX="579.0" layoutY="493.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="109.0" style="-fx-background-color: #2f99ff;" text="Sign Up" textFill="WHITE">
-         <font>
-            <Font name="Calibri Bold" size="17.0" />
-         </font></Button>
-      <Button fx:id="btnGoBack" layoutX="435.0" layoutY="493.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="109.0" style="-fx-background-color: #eeeeee;" text="Go Back" textFill="#333333">
-         <font>
-            <Font name="Calibri Bold" size="17.0" />
-         </font></Button>
       <PasswordField fx:id="tfPassword" layoutX="435.0" layoutY="341.0" prefHeight="25.0" prefWidth="253.0" style="-fx-background-color: #3a3a3a; -fx-text-inner-color: white;" />
       <PasswordField fx:id="tfRepeatPassword" layoutX="435.0" layoutY="421.0" prefHeight="25.0" prefWidth="253.0" style="-fx-background-color: #3a3a3a; -fx-text-inner-color: white;" />
       <Separator fx:id="decorUsername" layoutX="435.0" layoutY="144.0" prefHeight="0.0" prefWidth="253.0" />
@@ -56,7 +49,15 @@
       <Separator fx:id="decorPassword" layoutX="435.0" layoutY="365.0" prefHeight="0.0" prefWidth="253.0" />
       <Separator fx:id="decorFullName" layoutX="435.0" layoutY="291.0" prefHeight="0.0" prefWidth="253.0" />
       <Separator fx:id="decorRepeatPassword" layoutX="435.0" layoutY="445.0" prefHeight="0.0" prefWidth="253.0" />
-      <Button fx:id="btnDarkMode" layoutX="745.0" layoutY="14.0" maxHeight="35.0" maxWidth="61.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="36.0" style="-fx-background-color: #333333;" />
+      <Button fx:id="btnSignUp" layoutX="579.0" layoutY="493.0" mnemonicParsing="false" onAction="#handleSignUpButtonAction" prefHeight="43.0" prefWidth="109.0" style="-fx-background-color: #2f99ff;" text="Sign Up" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="17.0" />
+         </font></Button>
+      <Button fx:id="btnGoBack" layoutX="435.0" layoutY="493.0" mnemonicParsing="false" onAction="#handleGoBackButtonAction" prefHeight="43.0" prefWidth="109.0" style="-fx-background-color: #eeeeee;" text="Go Back" textFill="#333333">
+         <font>
+            <Font name="Calibri Bold" size="17.0" />
+         </font></Button>
+      <Button fx:id="btnDarkMode" layoutX="745.0" layoutY="14.0" maxHeight="35.0" maxWidth="61.0" mnemonicParsing="false" onAction="#handleDarkModeButtonAction" prefHeight="35.0" prefWidth="36.0" style="-fx-background-color: #333333;" />
       <Rectangle fx:id="decorLogo" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="572.0" layoutX="14.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="304.0" />
       <ImageView fx:id="imgLogo" fitHeight="150.0" fitWidth="200.0" layoutX="91.0" layoutY="217.0" pickOnBounds="true" preserveRatio="true">
          <image>

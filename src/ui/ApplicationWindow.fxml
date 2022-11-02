@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="paneMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="windowController.ApplicationWindowController">
    <children>
-      <Label alignment="CENTER" layoutX="86.0" layoutY="203.0" prefHeight="194.0" prefWidth="629.0" text="Welcome &quot;Username&quot; to our application's main page!" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+      <Label fx:id="lblWelcome" alignment="CENTER" layoutX="86.0" layoutY="203.0" prefHeight="194.0" prefWidth="629.0" text="Welcome &quot;Username&quot; to our application's main page!" textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <font>
             <Font size="30.0" />
          </font>
@@ -20,7 +20,7 @@
          </font></Button>
       <Button fx:id="btnDarkMode" layoutX="730.0" layoutY="24.0" maxHeight="35.0" maxWidth="61.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="61.0" style="-fx-background-color: #333333;" text="Button">
          <graphic>
-            <ImageView fitHeight="25.0" fitWidth="33.0" preserveRatio="true">
+            <ImageView fx:id="btnImgDarkMode" fitHeight="25.0" fitWidth="33.0" preserveRatio="true">
                <image>
                   <Image url="@sol_dark_mode.png" />
                </image>
