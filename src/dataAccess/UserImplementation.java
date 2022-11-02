@@ -54,7 +54,7 @@ public class UserImplementation implements Userable{
             // Creating a Package to send to the server
             User user = new User();
             user.setLogin(username);
-            Package pack = new Package(user, Action.REGISTER, Message.OK);
+            Package pack = new Package(user, Action.LOGIN, Message.OK);
             // Sends the object to the server
             auxOut.writeObject(pack);
             // We get an answer in case we get any exception
