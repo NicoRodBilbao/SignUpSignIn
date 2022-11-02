@@ -162,7 +162,7 @@ public class SignUpWindowController {
                         EmailAlreadyExistsException.*/
             if (validateEmail(tfEmail.getText())) {
                 decorEmail.setStyle("-fx-background-color:RED;");
-                throw new EmailAlreadyExistsException(); // tfEmail fails
+                throw new IncorrectEmailException(); // tfEmail fails
             }
             /*Se validará que la tfPassword y
                             tfRepeatPassword sean iguales.
@@ -172,7 +172,7 @@ public class SignUpWindowController {
             if (tfPassword.getText().equals(tfRepeatPassword.getText())) {
                 decorPassword.setStyle("-fx-background-color:RED;");
                 decorRepeatPassword.setStyle("-fx-background-color:RED;");
-                throw new IncorrectPasswordException(); // tfPassword and tfRepeatPassword don't contain the same string !!parameterize exception
+                throw new PasswordDoesntMatchException(); // tfPassword and tfRepeatPassword don't contain the same string !!parameterize exception
             }
             /*Se validará el campo de tfFullName.
                                 En caso de que no valide con más de
@@ -180,7 +180,7 @@ public class SignUpWindowController {
                                 IncorrectUserException.*/
             if (tfFullName.getText().length() <= 50) {
                 decorFullName.setStyle("-fx-background-color:RED;");
-                throw new IncorrectUserException(); // tfFullName fails !!parameterize exception
+                throw new IncorrectFullNameException(); // tfFullName fails !!parameterize exception
             }
             //Integer id, String login, String email, String fullName, UserStatus status, UserPrivilege privilege, String password
             User user = new User(0, // generic id
