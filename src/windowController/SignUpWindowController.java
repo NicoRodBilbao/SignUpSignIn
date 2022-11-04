@@ -5,6 +5,9 @@ import factories.UserFactory;
 import interfaces.Userable;
 import java.io.IOException;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventType;
@@ -46,6 +49,8 @@ public class SignUpWindowController {
     private final Image dmImg = new Image("ui/sol_dark_mode.png");
     private final Image lmImg = new Image("ui/sol_light_mode.png");
     protected final Logger LOGGER = Logger.getLogger(SignUpWindowController.class.getName());
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
+        Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     @FXML
     private Pane paneMain;
     @FXML
@@ -116,7 +121,8 @@ public class SignUpWindowController {
     }
 
     private boolean validateEmail(String txtEmail) { // TODO validar patrón de Email
-        return true;
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(txtEmail);
+        return matcher.find();
     }
 
     @FXML
