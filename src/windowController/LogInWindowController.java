@@ -44,7 +44,7 @@ public class LogInWindowController{
     private final Image dmImg = new Image("ui/sol_dark_mode.png");
     private final Image lmImg = new Image("ui/sol_light_mode.png");
     @FXML
-    private Pane paneMain;
+    private Pane paneLogInWindow;
     @FXML
     private TextField tfUsername;
     @FXML
@@ -200,7 +200,7 @@ public class LogInWindowController{
             lblPassword.setTextFill(Color.BLACK);
             lblTitle.setTextFill(Color.BLACK);
             // El fondo cambia el color de #333333, a WHITE.
-            paneMain.setStyle("-fx-background-color:WHITE");
+            paneLogInWindow.setStyle("-fx-background-color:WHITE");
             btnDarkMode.setStyle("-fx-background-color:WHITE");
         } // En caso de que la imagen sea sol_light_mode, se cambiar� por el sol_dark_mode.
         else {
@@ -217,7 +217,7 @@ public class LogInWindowController{
             lblPassword.setTextFill(Color.WHITE);
             lblTitle.setTextFill(Color.WHITE);
             // En caso contrario, pasar� a #333333
-            paneMain.setStyle("-fx-background-color:#333333");
+            paneLogInWindow.setStyle("-fx-background-color:#333333");
             btnDarkMode.setStyle("-fx-background-color:#333333");
         }
     }

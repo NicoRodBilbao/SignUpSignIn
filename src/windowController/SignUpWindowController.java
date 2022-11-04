@@ -52,7 +52,7 @@ public class SignUpWindowController {
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
         Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     @FXML
-    private Pane paneMain;
+    private Pane paneSignUpWindow;
     @FXML
     private Label lblUsername, lblFullName, lblEmail, lblPassword, lblRepeatPassword;
     @FXML
@@ -65,6 +65,9 @@ public class SignUpWindowController {
     private Separator decorUsername, decorEmail, decorPassword, decorFullName, decorRepeatPassword;
     @FXML
     private ImageView btnImgDarkMode;
+    
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
+        Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     /**
      * This method initializes the window.
@@ -179,7 +182,7 @@ public class SignUpWindowController {
                 decorRepeatPassword.setStyle("-fx-background-color:RED;");
                 throw new PasswordDoesntMatchException(); // tfPassword and tfRepeatPassword don't contain the same string !!parameterize exception
             }
-            /*Se validará el campo de tfFullName.
+             /*Se validará el campo de tfFullName.
                                 En caso de que no valide con más de
                                 50 caracteres lanza
                                 IncorrectUserException.*/
@@ -187,6 +190,8 @@ public class SignUpWindowController {
                 decorFullName.setStyle("-fx-background-color:RED;");
                 throw new IncorrectFullNameException(); // tfFullName fails !!parameterize exception
             }
+            
+            
             //Integer id, String login, String email, String fullName, UserStatus status, UserPrivilege privilege, String password
             User user = new User(0, // generic id
                     tfUsername.getText(),
@@ -259,7 +264,7 @@ public class SignUpWindowController {
             lblPassword.setTextFill(Color.BLACK);
             lblRepeatPassword.setTextFill(Color.BLACK);
             // El fondo cambia el color de #333333, a WHITE.
-            paneMain.setStyle("-fx-background-color:WHITE");
+            paneSignUpWindow.setStyle("-fx-background-color:WHITE");
             btnDarkMode.setStyle("-fx-background-color:WHITE");
         } // En caso de que la imagen sea sol_light_mode, se cambiará por el sol_dark_mode.
         else {
@@ -284,10 +289,9 @@ public class SignUpWindowController {
             lblPassword.setTextFill(Color.WHITE);
             lblRepeatPassword.setTextFill(Color.WHITE);
             // En caso contrario, pasará a #333333
-            paneMain.setStyle("-fx-background-color:#333333");
+            paneSignUpWindow.setStyle("-fx-background-color:#333333");
             btnDarkMode.setStyle("-fx-background-color:#333333");
         }
-
     }
 
     /**
