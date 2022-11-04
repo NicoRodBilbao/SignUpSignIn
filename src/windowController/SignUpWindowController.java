@@ -148,7 +148,7 @@ public class SignUpWindowController {
                 30 caracteres o que haya espacios
                 en blanco, lanza
                 IncorrectPasswordException*/
-            if (validateFieldString(tfPassword.getText())) {
+            if (!validateFieldString(tfPassword.getText())) {
                 decorPassword.setStyle("-fx-background-color:RED;");
                 throw new IncorrectPasswordException(); // tfPassword fails !!parameterize exception 
             }
@@ -157,7 +157,7 @@ public class SignUpWindowController {
                     30 caracteres o que haya espacios
                     en blanco, lanza
                     IncorrectPasswordException.*/
-            if (validateFieldString(tfRepeatPassword.getText())) {
+            if (!validateFieldString(tfRepeatPassword.getText())) {
                 decorRepeatPassword.setStyle("-fx-background-color:RED;");
                 throw new IncorrectPasswordException(); // tfRepeatPassword fails !!parameterize exception
             }
@@ -165,7 +165,7 @@ public class SignUpWindowController {
                         En caso de que no sea válido con un
                         formato correcto, lanza
                         EmailAlreadyExistsException.*/
-            if (validateEmail(tfEmail.getText())) {
+            if (!validateEmail(tfEmail.getText())) {
                 decorEmail.setStyle("-fx-background-color:RED;");
                 throw new IncorrectEmailException(); // tfEmail fails
             }
@@ -174,7 +174,7 @@ public class SignUpWindowController {
                             En el caso de que el tfPassword
                             como el tfRepeatPassword sean
                             distintos, lanza IncorrectPasswordException.*/
-            if (tfPassword.getText().equals(tfRepeatPassword.getText())) {
+            if (!tfPassword.getText().equals(tfRepeatPassword.getText())) {
                 decorPassword.setStyle("-fx-background-color:RED;");
                 decorRepeatPassword.setStyle("-fx-background-color:RED;");
                 throw new PasswordDoesntMatchException(); // tfPassword and tfRepeatPassword don't contain the same string !!parameterize exception
@@ -183,7 +183,7 @@ public class SignUpWindowController {
                                 En caso de que no valide con más de
                                 50 caracteres lanza
                                 IncorrectUserException.*/
-            if (tfFullName.getText().length() <= 50) {
+            if (tfFullName.getText().length() >= 50) {
                 decorFullName.setStyle("-fx-background-color:RED;");
                 throw new IncorrectFullNameException(); // tfFullName fails !!parameterize exception
             }
