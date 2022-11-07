@@ -1,11 +1,10 @@
 package windowController;
 
-import exceptions.IncorrectUserException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,11 +22,12 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import exceptions.IncorrectUserException;
 import model.User;
 
 /**
  * This class is the controller for the ApplicationWindow The window shows a
- * greeting message to the logged in user
+ * greeting message to the logged in user.
  *
  * @author joana, markel
  */
@@ -37,7 +37,6 @@ public class ApplicationWindowController {
     private final Image lmImg = new Image("ui/sol_light_mode.png");
     protected final Logger LOGGER = Logger.getLogger(SignUpWindowController.class.getName());
 
-    
     @FXML
     private Pane paneApplicationWindow;
     @FXML
@@ -151,7 +150,7 @@ public class ApplicationWindowController {
 
     /**
      * This methods allows for passing a user to the window controller, so the
-     * their data can be shown
+     * their data can be shown.
      *
      * @param u The user that has logged in
      */

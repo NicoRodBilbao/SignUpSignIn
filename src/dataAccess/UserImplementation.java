@@ -1,10 +1,5 @@
 package dataAccess;
 
-import exceptions.EmailAlreadyExistsException;
-import exceptions.TimeOutException;
-import exceptions.UserAlreadyExistsException;
-import exceptions.UserDoesNotExistException;
-import interfaces.Userable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -13,14 +8,15 @@ import java.io.OutputStream;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.util.logging.Logger;
-import model.Action;
-import model.Message;
-import model.Package;
-import model.User;
+
+import model.*;
+import model.Package; // If not specified Package is redundant (java.lang.Package)
+import interfaces.Userable;
+import exceptions.*;
 
 /**
  * This class connects with a server and can either sign up a user or sign in as
- * a user
+ * a user.
  *
  * @author Nicolas Rodriguez
  */

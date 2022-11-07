@@ -1,18 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package windowControllerTest;
 
-import java.awt.Color;
 import java.util.concurrent.TimeoutException;
-import javafx.scene.layout.Background;
-import static org.hamcrest.CoreMatchers.is;
+
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+
 import static org.testfx.api.FxAssert.verifyThat;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
@@ -21,9 +15,11 @@ import static org.testfx.matcher.base.NodeMatchers.isDisabled;
 import static org.testfx.matcher.base.NodeMatchers.isEnabled;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
 import static org.testfx.matcher.control.TextInputControlMatchers.hasText;
+
 import signupsigninclient.Application;
 
 /**
+ * This test class tests that the functionality of the LogInWindow is correct.
  *
  * @author Emil Nuñez
  */
