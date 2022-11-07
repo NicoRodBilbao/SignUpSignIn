@@ -5,6 +5,8 @@ import factories.UserFactory;
 import interfaces.Userable;
 import java.io.IOException;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -47,8 +49,10 @@ public class SignUpWindowController {
     private final Image dmImg = new Image("ui/sol_dark_mode.png");
     private final Image lmImg = new Image("ui/sol_light_mode.png");
     protected final Logger LOGGER = Logger.getLogger(SignUpWindowController.class.getName());
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
+        Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     @FXML
-    private Pane paneMain;
+    private Pane paneSignUpWindow;
     @FXML
     private Label lblUsername, lblFullName, lblEmail, lblPassword, lblRepeatPassword;
     @FXML
@@ -61,6 +65,9 @@ public class SignUpWindowController {
     private Separator decorUsername, decorEmail, decorPassword, decorFullName, decorRepeatPassword;
     @FXML
     private ImageView btnImgDarkMode;
+    
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
+        Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     /**
      * This method initializes the window.
@@ -117,7 +124,8 @@ public class SignUpWindowController {
     }
 
     private boolean validateEmail(String txtEmail) { // TODO validar patrón de Email
-        return true;
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(txtEmail);
+        return matcher.find();
     }
 
     @FXML
@@ -143,7 +151,7 @@ public class SignUpWindowController {
                 30 caracteres o que haya espacios
                 en blanco, lanza
                 IncorrectPasswordException*/
-            if (validateFieldString(tfPassword.getText())) {
+            if (!validateFieldString(tfPassword.getText())) {
                 decorPassword.setStyle("-fx-background-color:RED;");
                 throw new IncorrectPasswordException(); // tfPassword fails !!parameterize exception 
             }
@@ -152,7 +160,7 @@ public class SignUpWindowController {
                     30 caracteres o que haya espacios
                     en blanco, lanza
                     IncorrectPasswordException.*/
-            if (validateFieldString(tfRepeatPassword.getText())) {
+            if (!validateFieldString(tfRepeatPassword.getText())) {
                 decorRepeatPassword.setStyle("-fx-background-color:RED;");
                 throw new IncorrectPasswordException(); // tfRepeatPassword fails !!parameterize exception
             }
@@ -160,7 +168,7 @@ public class SignUpWindowController {
                         En caso de que no sea válido con un
                         formato correcto, lanza
                         EmailAlreadyExistsException.*/
-            if (validateEmail(tfEmail.getText())) {
+            if (!validateEmail(tfEmail.getText())) {
                 decorEmail.setStyle("-fx-background-color:RED;");
                 throw new IncorrectEmailException(); // tfEmail fails
             }
@@ -169,19 +177,21 @@ public class SignUpWindowController {
                             En el caso de que el tfPassword
                             como el tfRepeatPassword sean
                             distintos, lanza IncorrectPasswordException.*/
-            if (tfPassword.getText().equals(tfRepeatPassword.getText())) {
+            if (!tfPassword.getText().equals(tfRepeatPassword.getText())) {
                 decorPassword.setStyle("-fx-background-color:RED;");
                 decorRepeatPassword.setStyle("-fx-background-color:RED;");
                 throw new PasswordDoesntMatchException(); // tfPassword and tfRepeatPassword don't contain the same string !!parameterize exception
             }
-            /*Se validará el campo de tfFullName.
+             /*Se validará el campo de tfFullName.
                                 En caso de que no valide con más de
                                 50 caracteres lanza
                                 IncorrectUserException.*/
-            if (tfFullName.getText().length() <= 50) {
+            if (tfFullName.getText().length() >= 50) {
                 decorFullName.setStyle("-fx-background-color:RED;");
                 throw new IncorrectFullNameException(); // tfFullName fails !!parameterize exception
             }
+            
+            
             //Integer id, String login, String email, String fullName, UserStatus status, UserPrivilege privilege, String password
             User user = new User(0, // generic id
                     tfUsername.getText(),
@@ -254,7 +264,7 @@ public class SignUpWindowController {
             lblPassword.setTextFill(Color.BLACK);
             lblRepeatPassword.setTextFill(Color.BLACK);
             // El fondo cambia el color de #333333, a WHITE.
-            paneMain.setStyle("-fx-background-color:WHITE");
+            paneSignUpWindow.setStyle("-fx-background-color:WHITE");
             btnDarkMode.setStyle("-fx-background-color:WHITE");
         } // En caso de que la imagen sea sol_light_mode, se cambiará por el sol_dark_mode.
         else {
@@ -279,10 +289,9 @@ public class SignUpWindowController {
             lblPassword.setTextFill(Color.WHITE);
             lblRepeatPassword.setTextFill(Color.WHITE);
             // En caso contrario, pasará a #333333
-            paneMain.setStyle("-fx-background-color:#333333");
+            paneSignUpWindow.setStyle("-fx-background-color:#333333");
             btnDarkMode.setStyle("-fx-background-color:#333333");
         }
-
     }
 
     /**

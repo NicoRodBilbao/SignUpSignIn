@@ -39,7 +39,7 @@ public class ApplicationWindowController {
 
     
     @FXML
-    private Pane paneMain;
+    private Pane paneApplicationWindow;
     @FXML
     private User user;
     @FXML
@@ -101,13 +101,13 @@ public class ApplicationWindowController {
                 btnImgDarkMode.setImage(lmImg);
                 lblWelcome.setTextFill(Color.BLACK);
                 // El fondo cambia el color de #333333, a WHITE.
-                paneMain.setStyle("-fx-background-color:WHITE");
+                paneApplicationWindow.setStyle("-fx-background-color:WHITE");
                 btnDarkMode.setStyle("-fx-background-color:WHITE");
             } // En caso de que la imagen sea sol_light_mode, se cambiará por el sol_dark_mode.
             else {
                 btnImgDarkMode.setImage(dmImg);
                 lblWelcome.setTextFill(Color.WHITE);
-                paneMain.setStyle("-fx-background-color:#333333");
+                paneApplicationWindow.setStyle("-fx-background-color:#333333");
                 btnDarkMode.setStyle("-fx-background-color:#333333");
             }
         } catch (Exception e) {

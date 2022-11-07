@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="paneMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="801.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="windowController.LogInWindowController">
+<Pane fx:id="paneLogInWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="801.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="windowController.LogInWindowController">
     <children>
         <Button fx:id="btnSignUp" layoutX="458.0" layoutY="467.0" mnemonicParsing="false" onAction="#signUp" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: #2f99ff;" text="Sign Up" textFill="WHITE">
          <font>
