@@ -1,15 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package windowControllerTest;
 
 import java.util.concurrent.TimeoutException;
+
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+
 import static org.testfx.api.FxAssert.verifyThat;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
@@ -18,22 +15,32 @@ import static org.testfx.matcher.base.NodeMatchers.isDisabled;
 import static org.testfx.matcher.base.NodeMatchers.isEnabled;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
 import static org.testfx.matcher.control.TextInputControlMatchers.hasText;
+
 import signupsigninclient.Application;
 
 /**
+ * This test class tests that the functionality of the SignUpWindow is correct.
  *
- * @author Nicolas Rodriguez
+ * @author Nicolás Rodríguez
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SignUpWindowTest extends ApplicationTest {
 
+    /**
+     * This method sets up the SignUpWindow in order to test it.
+     *
+     * @throws TimeoutException The method cannot be executed and times out
+     */
     @BeforeClass
     public static void setUpClass() throws TimeoutException {
         FxToolkit.registerPrimaryStage();
         FxToolkit.setupApplication(Application.class);
     }
 
-    public void ClearStageSignUp() {
+    /**
+     * This method clears the text of all the fields in the window.
+     */
+    public void clearStageSignUp() {
         doubleClickOn("#tfUsername");
         eraseText(1);
         for (int i = 0; i < 2; i++) {
@@ -48,13 +55,17 @@ public class SignUpWindowTest extends ApplicationTest {
         eraseText(1);
     }
 
-    //Test de SignUp
+    /**
+     * This method tests that the window opens correctly.
+     */
     @Test
     public void test1_openSignUp() {
         clickOn("#btnSignUp");
         verifyThat("#paneSignUpWindow", isVisible());
     }
-
+    /**
+     * This method tests that the button of the dark mode works properly.
+     */
 //    @Test
 //    public void test2_darkMode() {
 //        clickOn("#btnDarkMode");
@@ -118,7 +129,7 @@ public class SignUpWindowTest extends ApplicationTest {
     //Test de SignUp
     @Test
     public void test8_UserErrorException() {
-        ClearStageSignUp();
+        clearStageSignUp();
         clickOn("#tfUsername");
         write("Pru eba");
         clickOn("#tfEmail");
@@ -144,7 +155,7 @@ public class SignUpWindowTest extends ApplicationTest {
     //Test de SignUp
     @Test
     public void test9_EmailErrorException() {
-        ClearStageSignUp();
+        clearStageSignUp();
         clickOn("#tfUsername");
         write("Prueba");
         clickOn("#tfEmail");
@@ -163,7 +174,7 @@ public class SignUpWindowTest extends ApplicationTest {
     //Test de SignUp
     @Test
     public void testB1_PasswordErrorException() {
-        ClearStageSignUp();
+        clearStageSignUp();
         clickOn("#tfUsername");
         write("Prueba");
         clickOn("#tfEmail");
@@ -188,7 +199,7 @@ public class SignUpWindowTest extends ApplicationTest {
     //Test de SignUp
     @Test
     public void testB2_RepeatPasswordErrorException() {
-        ClearStageSignUp();
+        clearStageSignUp();
         clickOn("#tfUsername");
         write("Prueba");
         clickOn("#tfEmail");
@@ -213,7 +224,7 @@ public class SignUpWindowTest extends ApplicationTest {
     //Test de SignUp
     @Test
     public void testB3_FullNameErrorException() {
-        ClearStageSignUp();
+        clearStageSignUp();
         clickOn("#tfUsername");
         write("Prueba");
         clickOn("#tfEmail");
@@ -232,7 +243,7 @@ public class SignUpWindowTest extends ApplicationTest {
     //Test de SignUp
     @Test
     public void testB4_PasswordDoesntMatchException() {
-        ClearStageSignUp();
+        clearStageSignUp();
         clickOn("#tfUsername");
         write("Prueba");
         clickOn("#tfEmail");

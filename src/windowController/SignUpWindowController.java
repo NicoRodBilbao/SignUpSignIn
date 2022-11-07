@@ -1,13 +1,10 @@
 package windowController;
 
-import exceptions.*;
-import factories.UserFactory;
-import interfaces.Userable;
 import java.io.IOException;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javafx.application.Platform;
+
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventType;
@@ -33,24 +30,28 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import model.User;
-import model.UserPrivilege;
-import model.UserStatus;
+
+import factories.UserFactory;
+import interfaces.Userable;
+
+import exceptions.*;
+import model.*;
 
 /**
- * This window has the functionality of singing up a user on the program
+ * This window has the functionality of singing up a user on the program. It can
+ * also return to the LogInWindow.
  *
- * @author Nicolas Rodriguez / Emil Nuñez
+ * @author Nicolás Rodríguez / Emil Nuñez
  */
 public class SignUpWindowController {
 
-    private Userable dao = UserFactory.getAccessUser();
+    private final Userable DAO = UserFactory.getAccessUser();
     private Stage stage;
     private final Image dmImg = new Image("ui/sol_dark_mode.png");
     private final Image lmImg = new Image("ui/sol_light_mode.png");
-    protected final Logger LOGGER = Logger.getLogger(SignUpWindowController.class.getName());
-    public static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
-        Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+    protected static final Logger LOGGER = Logger.getLogger(SignUpWindowController.class.getName());
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX
+            = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     @FXML
     private Pane paneSignUpWindow;
     @FXML
@@ -65,9 +66,6 @@ public class SignUpWindowController {
     private Separator decorUsername, decorEmail, decorPassword, decorFullName, decorRepeatPassword;
     @FXML
     private ImageView btnImgDarkMode;
-    
-    public static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
-        Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     /**
      * This method initializes the window.
@@ -123,7 +121,7 @@ public class SignUpWindowController {
         return flag;
     }
 
-    private boolean validateEmail(String txtEmail) { // TODO validar patrón de Email
+    private boolean validateEmail(String txtEmail) {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(txtEmail);
         return matcher.find();
     }
@@ -144,7 +142,7 @@ public class SignUpWindowController {
         try {
             if (!validateFieldString(tfUsername.getText())) {
                 decorUsername.setStyle("-fx-background-color:RED;");
-                throw new IncorrectUserException(); // tfUsername fails !!parameterize exception
+                throw new IncorrectUserException();
             }
             /* Se validará el campo tfPassword.
                 En caso de que no valide con más de
@@ -153,7 +151,7 @@ public class SignUpWindowController {
                 IncorrectPasswordException*/
             if (!validateFieldString(tfPassword.getText())) {
                 decorPassword.setStyle("-fx-background-color:RED;");
-                throw new IncorrectPasswordException(); // tfPassword fails !!parameterize exception 
+                throw new IncorrectPasswordException();
             }
             /*Se validará el campo de tfRepeatPassword.
                     En caso de que no valide con más de
@@ -162,7 +160,7 @@ public class SignUpWindowController {
                     IncorrectPasswordException.*/
             if (!validateFieldString(tfRepeatPassword.getText())) {
                 decorRepeatPassword.setStyle("-fx-background-color:RED;");
-                throw new IncorrectPasswordException(); // tfRepeatPassword fails !!parameterize exception
+                throw new IncorrectPasswordException();
             }
             /*Se validará el campo tfEmail.
                         En caso de que no sea válido con un
@@ -170,7 +168,7 @@ public class SignUpWindowController {
                         EmailAlreadyExistsException.*/
             if (!validateEmail(tfEmail.getText())) {
                 decorEmail.setStyle("-fx-background-color:RED;");
-                throw new IncorrectEmailException(); // tfEmail fails
+                throw new IncorrectEmailException();
             }
             /*Se validará que la tfPassword y
                             tfRepeatPassword sean iguales.
@@ -180,18 +178,17 @@ public class SignUpWindowController {
             if (!tfPassword.getText().equals(tfRepeatPassword.getText())) {
                 decorPassword.setStyle("-fx-background-color:RED;");
                 decorRepeatPassword.setStyle("-fx-background-color:RED;");
-                throw new PasswordDoesntMatchException(); // tfPassword and tfRepeatPassword don't contain the same string !!parameterize exception
+                throw new PasswordDoesntMatchException();
             }
-             /*Se validará el campo de tfFullName.
+            /*Se validará el campo de tfFullName.
                                 En caso de que no valide con más de
                                 50 caracteres lanza
                                 IncorrectUserException.*/
             if (tfFullName.getText().length() >= 50) {
                 decorFullName.setStyle("-fx-background-color:RED;");
-                throw new IncorrectFullNameException(); // tfFullName fails !!parameterize exception
+                throw new IncorrectFullNameException();
             }
-            
-            
+
             //Integer id, String login, String email, String fullName, UserStatus status, UserPrivilege privilege, String password
             User user = new User(0, // generic id
                     tfUsername.getText(),
@@ -200,7 +197,7 @@ public class SignUpWindowController {
                     UserStatus.ENABLED,
                     UserPrivilege.USER,
                     tfPassword.getText());
-            dao.signUp(user);
+            DAO.signUp(user);
             new Alert(Alert.AlertType.INFORMATION, "The user has been successfully registered.", ButtonType.OK).showAndWait();
             //En caso de que alguna validación sea errónea. 
         } catch (Exception e) {
@@ -210,11 +207,11 @@ public class SignUpWindowController {
 
     @FXML
     /**
-     * This method closes this window and returns to LogInWindow
+     * This method closes this window and returns to LogInWindow.
      *
      * @param event The observed event
      */
-    private void handleGoBackButtonAction(ActionEvent event) {  //! TODO probar el funcionamiento con las ventanas de otros integrantes
+    private void handleGoBackButtonAction(ActionEvent event) {
         try {
             Stage secondaryStage = new Stage();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/LogInWindow.fxml"));
@@ -234,7 +231,7 @@ public class SignUpWindowController {
     @FXML
     /**
      * This method changes atributes of the window in order to change the visual
-     * theme
+     * theme.
      *
      * @param event The observed event
      */
@@ -295,7 +292,7 @@ public class SignUpWindowController {
     }
 
     /**
-     * This method is used when a listener is triggered by focusing on a field
+     * This method is used when a listener is triggered by focusing on a field.
      *
      * @param observable The value listened
      * @param oldValue The old value obtained

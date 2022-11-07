@@ -1,10 +1,7 @@
-
 package windowController;
 
-import exceptions.*;
-import factories.UserFactory;
 import java.util.logging.Logger;
-import javafx.application.Platform;
+
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventType;
@@ -31,16 +28,23 @@ import javafx.stage.WindowEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+
+import factories.UserFactory;
+
+import exceptions.*;
 import model.User;
 
 /**
+ * This window has the functionality of logging into the application through a
+ * user(ApplicationWindow). It can also return to the LogInWindow.
  *
  * @author Markel Fernandez, Joana
  */
-public class LogInWindowController{
+public class LogInWindowController {
+
     Stage primaryStage;
-    protected Logger logger = Logger.getLogger(LogInWindowController.class.getName());
-    
+    protected static final Logger LOGGER = Logger.getLogger(LogInWindowController.class.getName());
+
     private final Image dmImg = new Image("ui/sol_dark_mode.png");
     private final Image lmImg = new Image("ui/sol_light_mode.png");
     @FXML
@@ -57,19 +61,22 @@ public class LogInWindowController{
     private Separator decorUsername, decorPassword;
     @FXML
     private ImageView btnImgDarkMode;
-            
-        
+
     private User user;
     @FXML
     private Rectangle decoLogo;
     @FXML
     private ImageView imgLogo;
-    
-    
+
+    /**
+     * The stage is initialized in this method, setting all the listeners and
+     * other requirements.
+     *
+     * @param root the base of all the elements in the Scene
+     */
     public void initStage(Parent root) {
-        logger.info("Initializing login stage");
-    
-        
+        LOGGER.info("Initializing login stage");
+
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Signin");
@@ -81,33 +88,41 @@ public class LogInWindowController{
         tfPassword.textProperty().addListener((event) -> this.textChange(KeyEvent.KEY_TYPED));
         btnLogIn.setDisable(true);
         primaryStage.show();
-        
+
     }
-    public void logIn(ActionEvent event) throws IncorrectPasswordException, UserDoesNotExistException, IncorrectUserException, TimeOutException{
-         try {
+
+    /**
+     * This method sends a string to a server and expects a User in return in
+     * order to open the next window, if a Username is not found, or is not
+     * validated an alert shows.
+     *
+     * @param event The observed event
+     */
+    public void logIn(ActionEvent event) {
+        try {
             //En caso de que no se valide el campo de usuario con más de 30 caracteres o que haya espacios en blanco, llama al IncorrectUserException
             // El decorUsername se mostrará en rojo en caso de que falle tfUsername
-            if (tfUsername.getText().length() > 30 || tfUsername.getText().contains(" ")){
+            if (tfUsername.getText().length() > 30 || tfUsername.getText().contains(" ")) {
                 decorUsername.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
                 throw new IncorrectUserException();
             }
             //En caso de que la contrase�a no sea válida con más de 30 caracteres o que haya espacios en blanco, llama al IncorrectPasswordException
             //DecorPassword se mostrará en rojo en caso de que falle tfPassword
-            if( tfPassword.getText().length() > 30 || tfPassword.getText().contains(" ")){
+            if (tfPassword.getText().length() > 30 || tfPassword.getText().contains(" ")) {
                 decorPassword.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
                 throw new IncorrectPasswordException();
-            }else{
+            } else {
                 user = UserFactory.getAccessUser().login(tfUsername.getText());
-                if(!user.getPassword().equals(tfPassword.getText())){
+                if (!user.getPassword().equals(tfPassword.getText())) {
                     decorPassword.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
                     throw new IncorrectPasswordException();
-                }else{
+                } else {
                     primaryStage.close();
                     Stage stage = new Stage();
                     // Carga el document FXML y obtiene un objeto Parent
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/ApplicationWindow.fxml"));
                     // Crea una escena a partir del Parent
-                    Parent root = (Parent)loader.load();
+                    Parent root = (Parent) loader.load();
                     ApplicationWindowController controller = (ApplicationWindowController) loader.getController();
                     // Establece la escena en el escensario (Stage) y la muestra
                     controller.setStage(stage);
@@ -115,32 +130,34 @@ public class LogInWindowController{
                     controller.initStage(root);
                 }
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
         }
-        
+
     }
-    
-    
-    public void signUp() throws Exception{
-        try{
+
+    /**
+     * This method sends a User to a server and either confirms its
+     * successfulness or shows an alert in case of an error ocurring.
+     */
+    public void signUp() {
+        try {
             Stage stage = new Stage();
             primaryStage.close();
             // Carga el document FXML y obtiene un objeto Parent
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/SignUpWindow.fxml"));
             // Crea una escena a partir del Parent
-            Parent root = (Parent)loader.load();
+            Parent root = (Parent) loader.load();
             SignUpWindowController controller = (SignUpWindowController) loader.getController();
             // Establece la escena en el escensario (Stage) y la muestra
             controller.setStage(stage);
             controller.initStage(root);
-        }catch(Exception e){
+        } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
         }
     }
-    
-    
-    private void windowShowing(WindowEvent event){
+
+    private void windowShowing(WindowEvent event) {
         tfUsername.requestFocus();
         decorUsername.setBackground(new Background(new BackgroundFill(Color.AQUA, CornerRadii.EMPTY, Insets.EMPTY)));
         btnLogIn.setDisable(true);
@@ -148,19 +165,15 @@ public class LogInWindowController{
 
     }
 
-    public void setStage(Stage stage) {
-        this.primaryStage = stage;
-    }
-    
-    private void focusChanged(ObservableValue observable, Boolean oldValue, Boolean newValue){
-        if(newValue){
-            if(tfPassword.isFocused()){
+    private void focusChanged(ObservableValue observable, Boolean oldValue, Boolean newValue) {
+        if (newValue) {
+            if (tfPassword.isFocused()) {
                 decorUsername.setBackground(new Background(new BackgroundFill(Color.GREY, CornerRadii.EMPTY, Insets.EMPTY)));
                 decorPassword.setBackground(new Background(new BackgroundFill(Color.AQUA, CornerRadii.EMPTY, Insets.EMPTY)));
             }
         }
-        if(oldValue){
-            if(tfUsername.isFocused()){
+        if (oldValue) {
+            if (tfUsername.isFocused()) {
                 decorUsername.setBackground(new Background(new BackgroundFill(Color.AQUA, CornerRadii.EMPTY, Insets.EMPTY)));
                 decorPassword.setBackground(new Background(new BackgroundFill(Color.GREY, CornerRadii.EMPTY, Insets.EMPTY)));
             }
@@ -168,17 +181,18 @@ public class LogInWindowController{
     }
 
     private void textChange(EventType<KeyEvent> KEY_TYPED) {
-        if(!tfUsername.getText().trim().isEmpty() && !tfPassword.getText().trim().isEmpty()){
+        if (!tfUsername.getText().trim().isEmpty() && !tfPassword.getText().trim().isEmpty()) {
             btnLogIn.setDisable(false);
         }
-        if(tfUsername.getText().trim().isEmpty() || tfPassword.getText().trim().isEmpty()){
+        if (tfUsername.getText().trim().isEmpty() || tfPassword.getText().trim().isEmpty()) {
             btnLogIn.setDisable(true);
         }
     }
+
     @FXML
     /**
      * This method changes atributes of the window in order to change the visual
-     * theme
+     * theme.
      *
      * @param event The observed event
      */
@@ -221,5 +235,8 @@ public class LogInWindowController{
             btnDarkMode.setStyle("-fx-background-color:#333333");
         }
     }
-}
 
+    public void setStage(Stage stage) {
+        this.primaryStage = stage;
+    }
+}
