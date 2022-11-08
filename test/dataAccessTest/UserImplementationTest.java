@@ -17,16 +17,14 @@ import model.*;
  */
 public class UserImplementationTest {
 
-    private final UserImplementation UI = new UserImplementation();
-
     /**
      * Test of signUp method, of class UserImplementation.
      */
     @Test
     public void testSignUp() {
         try {
-            User user = new User(0, "TEST", "test@gmail.com", "TEST", UserStatus.ENABLED, UserPrivilege.USER, "TEST");
-            UI.signUp(user);
+            User user = new User(0, "Prueba", "prueba@gmail.com", "Prueba", UserStatus.ENABLED, UserPrivilege.USER, "Prueba");
+            new UserImplementation().signUp(user);
             assertTrue(true);
         } catch (TimeOutException | UserAlreadyExistsException | EmailAlreadyExistsException ex) {
             assertTrue(false);
@@ -40,8 +38,8 @@ public class UserImplementationTest {
     @Test(expected = UserAlreadyExistsException.class)
     public void testSignUpUserAlreadyExists() {
         try {
-            User user = new User(0, "TEST", "test1@gmail.com", "TEST", UserStatus.ENABLED, UserPrivilege.USER, "TEST");
-            UI.signUp(user);
+            User user = new User(0, "Prueba1", "prueba1@gmail.com", "TEST", UserStatus.ENABLED, UserPrivilege.USER, "Prueba");
+            new UserImplementation().signUp(user);
             assertTrue(false);
         } catch (TimeOutException | EmailAlreadyExistsException ex) {
             assertTrue(false);
@@ -57,8 +55,8 @@ public class UserImplementationTest {
     @Test(expected = EmailAlreadyExistsException.class)
     public void testSignUpEmailAlreadyExists() throws Exception {
         try {
-            User user = new User(0, "TEST1", "test@gmail.com", "TEST", UserStatus.ENABLED, UserPrivilege.USER, "TEST");
-            UI.signUp(user);
+            User user = new User(0, "Prueba1", "prueba@gmail.com", "Prueba", UserStatus.ENABLED, UserPrivilege.USER, "Prueba");
+            new UserImplementation().signUp(user);
             assertTrue(false);
         } catch (TimeOutException | UserAlreadyExistsException ex) {
             assertTrue(false);
@@ -73,7 +71,7 @@ public class UserImplementationTest {
     @Test
     public void testLogin() {
         try {
-            assertEquals(UI.login("TEST").getLogin(), "TEST");
+            assertEquals(new UserImplementation().login("Prueba").getLogin(), "Prueba");
             assertTrue(true);
         } catch (TimeOutException | UserDoesNotExistException ex) {
             assertTrue(false);
@@ -86,7 +84,7 @@ public class UserImplementationTest {
     @Test(expected = UserDoesNotExistException.class)
     public void testLoginUserDoesNotExist() {
         try {
-            assertEquals(UI.login("TEST1").getLogin(), "TEST");
+            assertEquals(new UserImplementation().login("Prueba1").getLogin(), "Prueba");
             assertTrue(false);
         } catch (TimeOutException ex) {
             assertTrue(false);
