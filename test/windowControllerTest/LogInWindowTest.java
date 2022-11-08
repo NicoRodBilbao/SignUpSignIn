@@ -47,13 +47,13 @@ public class LogInWindowTest extends ApplicationTest {
         verifyThat("#btnLogIn", isDisabled());
     }
 
-//    @Test
-//    public void test2_darkMode() {
-//        clickOn("#btnDarkMode");
-//        verifyThat("#btnImgDarkMode", NodeMatchers.isVisible());
-//        clickOn("#btnDarkMode");
-//        verifyThat("#btnImgDarkMode", NodeMatchers.isVisible());
-//    }
+    @Test
+    public void test2_darkMode() {
+        clickOn("#btnDarkMode");
+        verifyThat("#btnImgDarkMode", NodeMatchers.isVisible());
+        clickOn("#btnDarkMode");
+        verifyThat("#btnImgDarkMode", NodeMatchers.isVisible());
+    }
     
     
     //Test de LogIn
@@ -116,8 +116,6 @@ public class LogInWindowTest extends ApplicationTest {
         clickOn("#btnLogIn");
         verifyThat("Aceptar", NodeMatchers.isVisible());
         clickOn("Aceptar");
-        clickOn("#tfPassword");
-        eraseText(20);
     }
 
     //Test de LogIn
@@ -142,12 +140,13 @@ public class LogInWindowTest extends ApplicationTest {
         clickOn("#tfPassword");
         write("Prueba");
         clickOn("#btnLogIn");
-        verifyThat("#paneWelcomeWindow", isVisible());
+        verifyThat("#paneApplicationWindow", isVisible());
+        clickOn("#btnLogOut");
     }
 
     
     //Test de SignUp y LogIn
-    @Test
+   /* @Test
     public void testB6_SignUp() {
         
         //Sign up the user "prueba"
@@ -186,5 +185,5 @@ public class LogInWindowTest extends ApplicationTest {
     public void testB7_UserLogOut() {
         clickOn("#btnLogOut");
         verifyThat("#paneLogInWindow" , isVisible());
-    }
+    }*/
 }
