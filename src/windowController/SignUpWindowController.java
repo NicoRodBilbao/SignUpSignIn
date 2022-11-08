@@ -50,7 +50,7 @@ public class SignUpWindowController {
     private final Image dmImg = new Image("ui/sol_dark_mode.png");
     private final Image lmImg = new Image("ui/sol_light_mode.png");
     protected static final Logger LOGGER = Logger.getLogger(SignUpWindowController.class.getName());
-    public static final Pattern VALID_EMAIL_ADDRESS_REGEX
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX // Email pattern for validation of format
             = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     @FXML
     private Pane paneSignUpWindow;

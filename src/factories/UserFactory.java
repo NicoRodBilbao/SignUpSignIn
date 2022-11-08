@@ -7,7 +7,7 @@ import interfaces.Userable;
  * This class creates an interface Userable and instantiates it as
  * UserImplementation.
  *
- * @author Nicolas Rodriguez
+ * @author Nicolás Rodríguez
  */
 public class UserFactory {
 
