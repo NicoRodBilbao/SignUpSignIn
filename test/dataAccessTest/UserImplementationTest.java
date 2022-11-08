@@ -28,11 +28,7 @@ public class UserImplementationTest {
             User user = new User(0, "TEST", "test@gmail.com", "TEST", UserStatus.ENABLED, UserPrivilege.USER, "TEST");
             UI.signUp(user);
             assertTrue(true);
-        } catch (TimeOutException ex) {
-            assertTrue(false);
-        } catch (UserAlreadyExistsException ex) {
-            assertTrue(false);
-        } catch (EmailAlreadyExistsException ex) {
+        } catch (TimeOutException | UserAlreadyExistsException | EmailAlreadyExistsException ex) {
             assertTrue(false);
         }
     }
@@ -47,12 +43,10 @@ public class UserImplementationTest {
             User user = new User(0, "TEST", "test1@gmail.com", "TEST", UserStatus.ENABLED, UserPrivilege.USER, "TEST");
             UI.signUp(user);
             assertTrue(false);
-        } catch (TimeOutException ex) {
+        } catch (TimeOutException | EmailAlreadyExistsException ex) {
             assertTrue(false);
         } catch (UserAlreadyExistsException ex) {
             assertTrue(true);
-        } catch (EmailAlreadyExistsException ex) {
-            assertTrue(false);
         }
     }
 
@@ -66,9 +60,7 @@ public class UserImplementationTest {
             User user = new User(0, "TEST1", "test@gmail.com", "TEST", UserStatus.ENABLED, UserPrivilege.USER, "TEST");
             UI.signUp(user);
             assertTrue(false);
-        } catch (TimeOutException ex) {
-            assertTrue(false);
-        } catch (UserAlreadyExistsException ex) {
+        } catch (TimeOutException | UserAlreadyExistsException ex) {
             assertTrue(false);
         } catch (EmailAlreadyExistsException ex) {
             assertTrue(true);
@@ -83,9 +75,7 @@ public class UserImplementationTest {
         try {
             assertEquals(UI.login("TEST").getLogin(), "TEST");
             assertTrue(true);
-        } catch (TimeOutException ex) {
-            assertTrue(false);
-        } catch (UserDoesNotExistException ex) {
+        } catch (TimeOutException | UserDoesNotExistException ex) {
             assertTrue(false);
         }
     }

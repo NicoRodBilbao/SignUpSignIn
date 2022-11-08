@@ -10,7 +10,7 @@ import windowController.LogInWindowController;
 /**
  * This is the main class of the application, it executes the first window.
  *
- * @author Nicolas Rodriguez
+ * @author Nicolás Rodríguez
  */
 public class Application extends javafx.application.Application {
 

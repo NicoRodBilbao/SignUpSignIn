@@ -8,22 +8,26 @@ import java.io.OutputStream;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.util.logging.Logger;
+import java.util.ResourceBundle;
 
 import model.*;
 import model.Package; // If not specified Package is redundant (java.lang.Package)
-import interfaces.Userable;
 import exceptions.*;
+
+import interfaces.Userable;
 
 /**
  * This class connects with a server and can either sign up a user or sign in as
  * a user.
  *
- * @author Nicolas Rodriguez
+ * @author Nicolás Rodríguez
  */
 public class UserImplementation implements Userable {
 
-    static final String HOST = "localhost"; // TODO read from properties file
-    static final int PORT = 9000; // TODO read from properties file
+    protected ResourceBundle configFile = ResourceBundle.getBundle("dataAccess.config");
+    
+    protected Integer PORT = Integer.parseInt(configFile.getString("PORT")); // Take the port from the config file
+    protected String HOST = (configFile.getString("HOST")); // Take the host to connect from the config file
     private Socket skClient;
     protected static final Logger LOGGER = Logger.getLogger(UserImplementation.class.getName());
 
@@ -40,7 +44,7 @@ public class UserImplementation implements Userable {
     public User login(String username) throws TimeOutException, UserDoesNotExistException {
         LOGGER.info("Initializing signUp.");
         try {
-            // Creating the vatiables necessary for the connection with the server
+            // Creating the variables necessary for the connection with the server
             skClient = new Socket(HOST, PORT);
             InputStream input = skClient.getInputStream();
             OutputStream output = skClient.getOutputStream();
@@ -55,11 +59,11 @@ public class UserImplementation implements Userable {
             // We get an answer in case we get any exception
             pack = (Package) auxIn.readObject();
             skClient.close();
-            if (pack.getMessage().equals(Message.USERDOESNOTEXIST)) {
+            if (pack.getMessage().equals(Message.USERDOESNOTEXIST)) { // User does not exist
                 throw new UserDoesNotExistException();
             }
             return pack.getUser();
-        } catch (ConnectException e) {
+        } catch (ConnectException e) { // Connection time out
             throw new TimeOutException();
         } catch (IOException e) {
             LOGGER.severe("Input Output exception thrown." + e.getMessage() + e.getClass().getName());
@@ -95,13 +99,13 @@ public class UserImplementation implements Userable {
             // We get an answer in case we get any exception
             pack = (Package) auxIn.readObject();
             skClient.close();
-            if (pack.getMessage().equals(Message.USERALREADYEXISTS)) {
+            if (pack.getMessage().equals(Message.USERALREADYEXISTS)) { // User already exists
                 throw new UserAlreadyExistsException();
             }
-            if (pack.getMessage().equals(Message.EMAILALREADYEXISTS)) {
+            if (pack.getMessage().equals(Message.EMAILALREADYEXISTS)) { // Email already exists
                 throw new EmailAlreadyExistsException();
             }
-        } catch (ConnectException e) {
+        } catch (ConnectException e) { // Connection time out
             throw new TimeOutException();
         } catch (IOException e) {
             LOGGER.severe("Input Output exception thrown." + e.getMessage());

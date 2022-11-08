@@ -35,7 +35,7 @@ public class LogInWindowTest extends ApplicationTest {
     public void ClearStageLogIn() {
         doubleClickOn("#tfUsername");
         eraseText(1);
-        doubleClickOn("#tfUsername");
+        doubleClickOn("#tfPassword");
         eraseText(1);
     }
 
