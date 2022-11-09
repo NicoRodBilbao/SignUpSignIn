@@ -1,12 +1,18 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package windowControllerTest;
 
 import java.util.concurrent.TimeoutException;
-
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-
 import static org.testfx.api.FxAssert.verifyThat;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
@@ -15,17 +21,20 @@ import static org.testfx.matcher.base.NodeMatchers.isDisabled;
 import static org.testfx.matcher.base.NodeMatchers.isEnabled;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
 import static org.testfx.matcher.control.TextInputControlMatchers.hasText;
-
 import signupsigninclient.Application;
 
 /**
- * This test class tests that the functionality of the LogInWindow is correct.
  *
  * @author Emil Nuñez
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class LogInWindowTest extends ApplicationTest {
 
+    private ImageView btnImgDarkMode;
+    private Image lmImg = new Image("ui/sol_light_mode.png");
+    private Image dmImg = new Image("ui/sol_dark_mode.png");
+   
+    
     @BeforeClass
     public static void setUpClass() throws TimeoutException {
         FxToolkit.registerPrimaryStage();
@@ -39,24 +48,32 @@ public class LogInWindowTest extends ApplicationTest {
         eraseText(1);
     }
 
-    //Test de LogIn
+    /**
+     * Initial stage of the window
+     */
     @Test
     public void test1_InitialStateLogIn() {
+        
         verifyThat("#tfUsername", hasText(""));
         verifyThat("#tfPassword", hasText(""));
         verifyThat("#btnLogIn", isDisabled());
     }
 
+    /**
+     * test change of color of the window
+     */
     @Test
     public void test2_darkMode() {
+        btnImgDarkMode = lookup("#btnImgDarkMode").query();
         clickOn("#btnDarkMode");
-        verifyThat("#btnImgDarkMode", NodeMatchers.isVisible());
+        Assert.assertTrue(btnImgDarkMode.getImage().getPixelReader().getArgb(53, 18) == lmImg.getPixelReader().getArgb(53, 18));
         clickOn("#btnDarkMode");
-        verifyThat("#btnImgDarkMode", NodeMatchers.isVisible());
+        Assert.assertTrue(btnImgDarkMode.getImage().getPixelReader().getArgb(53, 18) == dmImg.getPixelReader().getArgb(53, 18));
     }
     
-    
-    //Test de LogIn
+    /**
+     * test the button login is disabled
+     */
     @Test
     public void test3_buttonLogInDisabled() {
         verifyThat("#btnLogIn", isDisabled());
@@ -70,9 +87,12 @@ public class LogInWindowTest extends ApplicationTest {
         eraseText(6);
     }
 
-    //Test de LogIn
+    /**
+     * test the button login is enabled
+     */
     @Test
     public void test4_buttonLogInEnabled() {
+        ClearStageLogIn();
         clickOn("#tfUsername");
         write("Prueba");
         clickOn("#tfPassword");
@@ -80,7 +100,9 @@ public class LogInWindowTest extends ApplicationTest {
         verifyThat("#btnLogIn", isEnabled());
     }
 
-    //Test de LogIn
+    /**
+     * test the errors of tfUsername
+     */
     @Test
     public void test5_UsernameErrorException() {
         ClearStageLogIn();
@@ -99,7 +121,9 @@ public class LogInWindowTest extends ApplicationTest {
         clickOn("Aceptar");
     }
 
-    //Test de LogIn
+    /**
+     * test the errors of tfPassword
+     */
     @Test
     public void test6_PasswordErrorException() {
         ClearStageLogIn();
@@ -116,9 +140,13 @@ public class LogInWindowTest extends ApplicationTest {
         clickOn("#btnLogIn");
         verifyThat("Aceptar", NodeMatchers.isVisible());
         clickOn("Aceptar");
+        clickOn("#tfPassword");
+        eraseText(20);
     }
 
-    //Test de LogIn
+    /**
+     * test the error of the Login
+     */
     @Test
     public void test7_LogInErrorException() {
         ClearStageLogIn();
@@ -129,9 +157,12 @@ public class LogInWindowTest extends ApplicationTest {
         clickOn("#btnLogIn");
         verifyThat("Aceptar", NodeMatchers.isVisible());
         clickOn("Aceptar");
+
     }
 
-    //Test de LogIn
+    /**
+     * test the Login
+     */
     @Test
     public void test8_LogIn() {
         ClearStageLogIn();
@@ -140,50 +171,7 @@ public class LogInWindowTest extends ApplicationTest {
         clickOn("#tfPassword");
         write("Prueba");
         clickOn("#btnLogIn");
-        verifyThat("#paneApplicationWindow", isVisible());
-        clickOn("#btnLogOut");
+        verifyThat("#paneWelcomeWindow", isVisible());
     }
 
-    
-    //Test de SignUp y LogIn
-   /* @Test
-    public void testB6_SignUp() {
-        
-        //Sign up the user "prueba"
-        clickOn("#tfUsername");
-        eraseText(6);
-        write("Prueba");
-        clickOn("#tfEmail");
-        eraseText(20);
-        write("prueba@gmail.com");
-        clickOn("#tfFullName");
-        eraseText(6);
-        write("Prueba");
-        clickOn("#tfPassword");
-        eraseText(6);
-        write("Prueba");
-        clickOn("#tfRepeatPassword");
-        eraseText(6);
-        write("Prueba");
-        clickOn("#btnSignUp");
-
-        //Go back to log in
-        clickOn("#btnGoBack");
-        clickOn("#tfUsername");
-        eraseText(6);
-        write("Prueba");
-        clickOn("#tfPassword");
-        eraseText(6);
-        write("Prueba");
-        clickOn("#btnLogIn");
-        verifyThat("#paneApplicationWindow", isVisible());
-    }
-    
-    //Test de WelcomeWindow
-    //Comprobar que funciona bien
-     @Test
-    public void testB7_UserLogOut() {
-        clickOn("#btnLogOut");
-        verifyThat("#paneLogInWindow" , isVisible());
-    }*/
 }
