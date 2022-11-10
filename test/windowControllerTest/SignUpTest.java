@@ -1,30 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package windowControllerTest;
 
 import java.util.concurrent.TimeoutException;
+
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import static org.testfx.api.FxAssert.verifyThat;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
+import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
+
 import signupsigninclient.Application;
 
 /**
+ * This class is an integrated test that goes through the whole program without
+ * any thrown exceptions.
  *
- * @author Emil Nuñez
+ * @author Emil Nuñez / Nicolás Rodríguez
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SignUpTest extends ApplicationTest {
 
     /**
-     * Prepare windowController
+     * Prepares the windowController for the tests to begin.
      *
      * @throws TimeoutException
      */
@@ -35,15 +34,16 @@ public class SignUpTest extends ApplicationTest {
     }
 
     /**
-     * Test the login with a user
+     * Test that the sign up and login works with a user "Prueba".
      */
     @Test
     public void test1_SignUp() {
+        // Sign Up
         clickOn("#btnSignUp");
         clickOn("#tfUsername");
-        write("Prueba");
+        write("PruebaGUI");
         clickOn("#tfEmail");
-        write("prueba@gmail.com");
+        write("pruebagui@gmail.com");
         clickOn("#tfFullName");
         write("Prueba");
         clickOn("#tfPassword");
@@ -52,17 +52,17 @@ public class SignUpTest extends ApplicationTest {
         write("Prueba");
         clickOn("#btnSignUp");
         clickOn("Aceptar");
-
+        // Go back to log in
         clickOn("#btnGoBack");
-
+        // Log in
         clickOn("#tfUsername");
-        write("Prueba");
+        write("PruebaGUI");
         clickOn("#tfPassword");
         write("Prueba");
         clickOn("#btnLogIn");
+        // Verification
         verifyThat("#paneApplicationWindow", isVisible());
-
+        closeCurrentWindow();
     }
 
-   
 }
