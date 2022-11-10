@@ -320,7 +320,6 @@ public class SignUpWindowTest extends ApplicationTest {
         write("Prueba");
         clickOn("#btnSignUp");
         verifyThat(correctSignIn, isVisible());
-        closeCurrentWindow();
     }
 
 }

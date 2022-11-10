@@ -174,7 +174,6 @@ public class LogInWindowTest extends ApplicationTest {
         write("Prueba");
         clickOn("#btnLogIn");
         verifyThat("Welcome Prueba to our application's main page!", isVisible());
-        closeCurrentWindow();
     }
 
 }

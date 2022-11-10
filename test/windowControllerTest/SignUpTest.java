@@ -62,7 +62,6 @@ public class SignUpTest extends ApplicationTest {
         clickOn("#btnLogIn");
         // Verification
         verifyThat("#paneApplicationWindow", isVisible());
-        closeCurrentWindow();
     }
 
 }
