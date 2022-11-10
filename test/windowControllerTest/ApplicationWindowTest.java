@@ -79,6 +79,5 @@ public class ApplicationWindowTest extends ApplicationTest {
     public void test4_buttonLogOut() {
         clickOn("#btnLogOut");
         verifyThat("#paneLogInWindow", isVisible());
-        closeCurrentWindow();
     }
 }
