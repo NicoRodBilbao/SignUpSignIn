@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package windowControllerTest;
 
 import java.util.concurrent.TimeoutException;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.junit.Assert;
@@ -13,29 +9,39 @@ import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import static org.testfx.api.FxAssert.verifyThat;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
-import org.testfx.matcher.base.NodeMatchers;
+import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.isDisabled;
 import static org.testfx.matcher.base.NodeMatchers.isEnabled;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
 import static org.testfx.matcher.control.TextInputControlMatchers.hasText;
+
 import signupsigninclient.Application;
 
+import exceptions.*;
+
 /**
+ * This test class tests the correct functioning of the SignUp Window. It tests
+ * all possible issues when signing up.
  *
- * @author Emil Nuñez
+ * @author Emil Nuñez / Nicolás Rodríguez
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SignUpWindowTest extends ApplicationTest {
 
-    private ImageView btnImgDarkMode;
-    private Image lmImg = new Image("ui/sol_light_mode.png");
-    private Image dmImg = new Image("ui/sol_dark_mode.png");
+    public ImageView btnImgDarkMode;
+    public Image lmImg = new Image("ui/sol_light_mode.png");
+    public Image dmImg = new Image("ui/sol_dark_mode.png");
+    public String iuException = new IncorrectUserException().getMessage();
+    public String ieException = new IncorrectEmailException().getMessage();
+    public String ipException = new IncorrectPasswordException().getMessage();
+    public String ifnException = new IncorrectFullNameException().getMessage();
+    public String pdmException = new PasswordDoesntMatchException().getMessage();
+    public String correctSignIn = "The user has been successfully registered.";
 
     /**
-     * Prepare windowController
+     * this method sets up the window controller.
      *
      * @throws TimeoutException
      */
@@ -46,9 +52,11 @@ public class SignUpWindowTest extends ApplicationTest {
     }
 
     /**
-     * Clear the TestFields
+     * This method clears all the TestFields.
      */
-    public void ClearStageSignUp() {
+    public void clearStageSignUp() {
+        doubleClickOn("#tfUsername");
+        eraseText(1);
         doubleClickOn("#tfUsername");
         eraseText(1);
         for (int i = 0; i < 2; i++) {
@@ -64,7 +72,7 @@ public class SignUpWindowTest extends ApplicationTest {
     }
 
     /**
-     * Test the window open
+     * Tests that the window opens.
      */
     @Test
     public void test1_openSignUp() {
@@ -73,7 +81,7 @@ public class SignUpWindowTest extends ApplicationTest {
     }
 
     /**
-     * test change of color of the window
+     * Tests the functionality of the dark mode.
      */
     @Test
     public void test2_darkMode() {
@@ -85,7 +93,7 @@ public class SignUpWindowTest extends ApplicationTest {
     }
 
     /**
-     * test the initial state of the window, if the fields are all clear
+     * Tests the initial state of the window.
      */
     @Test
     public void test5_initialStateSignUp() {
@@ -98,7 +106,7 @@ public class SignUpWindowTest extends ApplicationTest {
     }
 
     /**
-     * test if the btnSignUp is disabled
+     * Tests that the btnSignUp is disabled.
      */
     @Test
     public void test6_SignInDisabled() {
@@ -125,7 +133,7 @@ public class SignUpWindowTest extends ApplicationTest {
     }
 
     /**
-     * test if the btnSignUp is enabled
+     * Tests that the btnSignUp is enabled.
      */
     @Test
     public void test7_SignInEnabled() {
@@ -143,11 +151,11 @@ public class SignUpWindowTest extends ApplicationTest {
     }
 
     /**
-     * test if the user exceptions throws
+     * Tests that IncorrectUserException is thrown and caught.
      */
     @Test
-    public void test8_UserErrorException() {
-        ClearStageSignUp();
+    public void test8_IncorrectUserException() {
+        clearStageSignUp();
         clickOn("#tfUsername");
         write("Pru eba");
         clickOn("#tfEmail");
@@ -159,22 +167,24 @@ public class SignUpWindowTest extends ApplicationTest {
         clickOn("#tfRepeatPassword");
         write("Prueba");
         clickOn("#btnSignUp");
-        verifyThat("Aceptar", NodeMatchers.isVisible());
+        verifyThat(iuException, isVisible());
+
         clickOn("Aceptar");
         clickOn("#tfUsername");
         eraseText(10);
         write("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         clickOn("#btnSignUp");
-        verifyThat("Aceptar", NodeMatchers.isVisible());
+        verifyThat(iuException, isVisible());
+
         clickOn("Aceptar");
     }
 
     /**
-     * test if the email exceptions throws
+     * Tests that IncorrectEmailException is thrown and caught.
      */
     @Test
-    public void test9_EmailErrorException() {
-        ClearStageSignUp();
+    public void test9_IncorrectEmailException() {
+        clearStageSignUp();
         clickOn("#tfUsername");
         write("Prueba");
         clickOn("#tfEmail");
@@ -186,16 +196,17 @@ public class SignUpWindowTest extends ApplicationTest {
         clickOn("#tfRepeatPassword");
         write("Prueba");
         clickOn("#btnSignUp");
-        verifyThat("Aceptar", NodeMatchers.isVisible());
+        verifyThat(ieException, isVisible());
+
         clickOn("Aceptar");
     }
 
     /**
-     * test if the password exceptions throws
+     * Tests that IncorrectPasswordException is thrown and caught.
      */
     @Test
-    public void testB1_PasswordErrorException() {
-        ClearStageSignUp();
+    public void testB1_IncorrectPasswordException() {
+        clearStageSignUp();
         clickOn("#tfUsername");
         write("Prueba");
         clickOn("#tfEmail");
@@ -207,22 +218,25 @@ public class SignUpWindowTest extends ApplicationTest {
         clickOn("#tfRepeatPassword");
         write("Prueba");
         clickOn("#btnSignUp");
-        verifyThat("Aceptar", NodeMatchers.isVisible());
+        verifyThat(ipException, isVisible());
+
         clickOn("Aceptar");
         clickOn("#tfPassword");
         eraseText(10);
         write("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         clickOn("#btnSignUp");
-        verifyThat("Aceptar", NodeMatchers.isVisible());
+        verifyThat(ipException, isVisible());
+
         clickOn("Aceptar");
     }
 
     /**
-     * test if the repeatpassword exceptions throws
+     * Tests that IncorrectPasswordException on Repeat Password is thrown and
+     * caught.
      */
     @Test
-    public void testB2_RepeatPasswordErrorException() {
-        ClearStageSignUp();
+    public void testB2_RepeatPasswordException() {
+        clearStageSignUp();
         clickOn("#tfUsername");
         write("Prueba");
         clickOn("#tfEmail");
@@ -234,22 +248,24 @@ public class SignUpWindowTest extends ApplicationTest {
         clickOn("#tfRepeatPassword");
         write("Pr ueba");
         clickOn("#btnSignUp");
-        verifyThat("Aceptar", NodeMatchers.isVisible());
+        verifyThat(ipException, isVisible());
+
         clickOn("Aceptar");
         clickOn("#tfRepeatPassword");
         eraseText(10);
         write("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         clickOn("#btnSignUp");
-        verifyThat("Aceptar", NodeMatchers.isVisible());
+        verifyThat(ipException, isVisible());
+
         clickOn("Aceptar");
     }
 
     /**
-     * test if the fullname exception throws
+     * Tests that FullNameErrorException is thrown and caught.
      */
     @Test
     public void testB3_FullNameErrorException() {
-        ClearStageSignUp();
+        clearStageSignUp();
         clickOn("#tfUsername");
         write("Prueba");
         clickOn("#tfEmail");
@@ -261,16 +277,17 @@ public class SignUpWindowTest extends ApplicationTest {
         clickOn("#tfRepeatPassword");
         write("Prueba");
         clickOn("#btnSignUp");
-        verifyThat("Aceptar", NodeMatchers.isVisible());
+        verifyThat(ifnException, isVisible());
+
         clickOn("Aceptar");
     }
 
     /**
-     * test the exception when
+     * Tests that PasswordDoesntMatchException is thrown and caught.
      */
     @Test
     public void testB4_PasswordDoesntMatchException() {
-        ClearStageSignUp();
+        clearStageSignUp();
         clickOn("#tfUsername");
         write("Prueba");
         clickOn("#tfEmail");
@@ -282,16 +299,15 @@ public class SignUpWindowTest extends ApplicationTest {
         clickOn("#tfRepeatPassword");
         write("Aceptar");
         clickOn("#btnSignUp");
-        verifyThat("Aceptar", NodeMatchers.isVisible());
-
+        verifyThat(pdmException, isVisible());
     }
-    
+
     /**
-     * test the exception when
+     * Tests that there are no exceptions when siging up.
      */
     @Test
     public void testB5_SignUp() {
-        ClearStageSignUp();
+        clearStageSignUp();
         clickOn("#tfUsername");
         write("Prueba");
         clickOn("#tfEmail");
@@ -303,8 +319,8 @@ public class SignUpWindowTest extends ApplicationTest {
         clickOn("#tfRepeatPassword");
         write("Prueba");
         clickOn("#btnSignUp");
-        verifyThat("Aceptar", NodeMatchers.isVisible());
-
+        verifyThat(correctSignIn, isVisible());
+        closeCurrentWindow();
     }
 
 }

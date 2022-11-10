@@ -7,6 +7,9 @@ import dataAccess.UserImplementation;
 
 import exceptions.*;
 import model.*;
+import org.junit.runner.RunWith;
+import suite.Order;
+import suite.OrderedRunner;
 
 /**
  * This test class tests that the Client side can connect with the Server, thus
@@ -15,15 +18,17 @@ import model.*;
  *
  * @author Nicolás Rodríguez
  */
+@RunWith(OrderedRunner.class)
 public class UserImplementationTest {
 
     /**
      * Test of signUp method, of class UserImplementation.
      */
+    @Order (order=1)
     @Test
     public void testSignUp() {
         try {
-            User user = new User(0, "Prueba", "prueba@gmail.com", "Prueba", UserStatus.ENABLED, UserPrivilege.USER, "Prueba");
+            User user = new User(0, "PruebaUI", "pruebaui@gmail.com", "Prueba", UserStatus.ENABLED, UserPrivilege.USER, "Prueba1");
             new UserImplementation().signUp(user);
             assertTrue(true);
         } catch (TimeOutException | UserAlreadyExistsException | EmailAlreadyExistsException ex) {
@@ -35,10 +40,11 @@ public class UserImplementationTest {
      * Test of signUp method, of class UserImplementation exception
      * UserAlreadyExistsException.
      */
-    @Test(expected = UserAlreadyExistsException.class)
+        @Order (order=2)
+        @Test
     public void testSignUpUserAlreadyExists() {
         try {
-            User user = new User(0, "Prueba1", "prueba1@gmail.com", "TEST", UserStatus.ENABLED, UserPrivilege.USER, "Prueba");
+            User user = new User(0, "PruebaUI", "pruebaui1@gmail.com", "TEST", UserStatus.ENABLED, UserPrivilege.USER, "Prueba2");
             new UserImplementation().signUp(user);
             assertTrue(false);
         } catch (TimeOutException | EmailAlreadyExistsException ex) {
@@ -52,10 +58,11 @@ public class UserImplementationTest {
      * Test of signUp method, of class UserImplementation exception
      * EmailAlreadyExistsException.
      */
-    @Test(expected = EmailAlreadyExistsException.class)
-    public void testSignUpEmailAlreadyExists() throws Exception {
+    @Test
+        @Order (order=3)
+    public void testSignUpEmailAlreadyExists() {
         try {
-            User user = new User(0, "Prueba1", "prueba@gmail.com", "Prueba", UserStatus.ENABLED, UserPrivilege.USER, "Prueba");
+            User user = new User(0, "PruebaUI1", "pruebaui@gmail.com", "Prueba", UserStatus.ENABLED, UserPrivilege.USER, "Prueba3");
             new UserImplementation().signUp(user);
             assertTrue(false);
         } catch (TimeOutException | UserAlreadyExistsException ex) {
@@ -68,10 +75,12 @@ public class UserImplementationTest {
     /**
      * Test of login method, of class UserImplementation.
      */
-    @Test
+    
+        @Order (order=4)
+        @Test
     public void testLogin() {
         try {
-            assertEquals(new UserImplementation().login("Prueba").getLogin(), "Prueba");
+            assertEquals(new UserImplementation().login("PruebaUI").getLogin(), "PruebaUI");
             assertTrue(true);
         } catch (TimeOutException | UserDoesNotExistException ex) {
             assertTrue(false);
@@ -81,10 +90,12 @@ public class UserImplementationTest {
     /**
      * Test of login method, of class UserImplementation.
      */
-    @Test(expected = UserDoesNotExistException.class)
+    
+        @Order (order=5)
+        @Test
     public void testLoginUserDoesNotExist() {
         try {
-            assertEquals(new UserImplementation().login("Prueba1").getLogin(), "Prueba");
+            assertEquals(new UserImplementation().login("PruebaUI1").getLogin(), "PruebaUI");
             assertTrue(false);
         } catch (TimeOutException ex) {
             assertTrue(false);

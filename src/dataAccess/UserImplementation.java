@@ -25,7 +25,7 @@ import interfaces.Userable;
 public class UserImplementation implements Userable {
 
     protected ResourceBundle configFile = ResourceBundle.getBundle("dataAccess.config");
-    
+
     protected Integer PORT = Integer.parseInt(configFile.getString("PORT")); // Take the port from the config file
     protected String HOST = (configFile.getString("HOST")); // Take the host to connect from the config file
     private Socket skClient;
