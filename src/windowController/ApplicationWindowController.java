@@ -111,7 +111,6 @@ public class ApplicationWindowController {
             }
         } catch (Exception e) {
             showError(e.getMessage());
-            System.out.println(e.getMessage());
         }
     }
 
