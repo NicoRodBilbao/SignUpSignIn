@@ -300,9 +300,6 @@ public class SignUpWindowController {
      */
     private void focusChanged(ObservableValue observable, Boolean oldValue, Boolean newValue) {
         if (newValue) {
-            if (btnDarkMode.isFocused()) {
-                System.err.println("A");
-            }
             if (tfUsername.isFocused()) {
                 decorUsername.setStyle("-fx-background-color:AQUA;");
             } else if (tfEmail.isFocused()) {
