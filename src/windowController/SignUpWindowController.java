@@ -142,6 +142,8 @@ public class SignUpWindowController {
         try {
             if (!validateFieldString(tfUsername.getText())) {
                 decorUsername.setStyle("-fx-background-color:RED;");
+                tfUsername.requestFocus();
+                tfUsername.selectAll();
                 throw new IncorrectUserException();
             }
             /* Se validará el campo tfPassword.
@@ -151,6 +153,8 @@ public class SignUpWindowController {
                 IncorrectPasswordException*/
             if (!validateFieldString(tfPassword.getText())) {
                 decorPassword.setStyle("-fx-background-color:RED;");
+                tfPassword.requestFocus();
+                tfPassword.selectAll();
                 throw new IncorrectPasswordException();
             }
             /*Se validará el campo de tfRepeatPassword.
@@ -160,6 +164,8 @@ public class SignUpWindowController {
                     IncorrectPasswordException.*/
             if (!validateFieldString(tfRepeatPassword.getText())) {
                 decorRepeatPassword.setStyle("-fx-background-color:RED;");
+                tfRepeatPassword.requestFocus();
+                tfRepeatPassword.selectAll();
                 throw new IncorrectPasswordException();
             }
             /*Se validará el campo tfEmail.
@@ -168,6 +174,8 @@ public class SignUpWindowController {
                         EmailAlreadyExistsException.*/
             if (!validateEmail(tfEmail.getText())) {
                 decorEmail.setStyle("-fx-background-color:RED;");
+                tfEmail.requestFocus();
+                tfEmail.selectAll();
                 throw new IncorrectEmailException();
             }
             /*Se validará que la tfPassword y
@@ -186,6 +194,8 @@ public class SignUpWindowController {
                                 IncorrectUserException.*/
             if (tfFullName.getText().length() >= 50) {
                 decorFullName.setStyle("-fx-background-color:RED;");
+                tfFullName.requestFocus();
+                tfFullName.selectAll();
                 throw new IncorrectFullNameException();
             }
 
@@ -340,8 +350,10 @@ public class SignUpWindowController {
         LOGGER.info("Beggining SignInWindowController::handleSignUpWindowShowing");
         //  btnSignUp estará deshabilitado
         btnSignUp.setDisable(true);
+        btnSignUp.setDefaultButton(true);//Cambio del boton para que sea defaultButton
         //  el btnGoBack estará habilitado
         btnGoBack.setDisable(false);
+        btnGoBack.setCancelButton(true);//Cambio del boton para que sea canceltButton
         //  y el foco estará en el campo tfUsername
         tfUsername.requestFocus();
         // los campos vacíos
