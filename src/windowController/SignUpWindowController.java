@@ -35,6 +35,7 @@ import factories.UserFactory;
 import interfaces.Userable;
 
 import exceptions.*;
+import java.util.logging.Level;
 import model.*;
 
 /**
@@ -134,6 +135,7 @@ public class SignUpWindowController {
      * @param event The observed event
      */
     private void handleSignUpButtonAction(ActionEvent event) {
+        LOGGER.info("Singing Up user: "+ tfUsername.getText());
         /*Se validará el campo tfUsername.
             En caso de que no se valide con más
             de 30 caracteres o que haya
@@ -198,9 +200,12 @@ public class SignUpWindowController {
                     UserPrivilege.USER,
                     tfPassword.getText());
             DAO.signUp(user);
+            LOGGER.info("User: "+ tfUsername.getText() +" successfully signed up.");
             new Alert(Alert.AlertType.INFORMATION, "The user has been successfully registered.", ButtonType.OK).showAndWait();
+            closeWidowToSignIn();
             //En caso de que alguna validación sea errónea. 
         } catch (Exception e) {
+            LOGGER.severe("ERROR: Sign Up of user: "+tfUsername.getText()+ " could not be perfeformed due to an "+e.getClass().getName().substring(11)+".");
             new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
         }
     }
@@ -212,20 +217,7 @@ public class SignUpWindowController {
      * @param event The observed event
      */
     private void handleGoBackButtonAction(ActionEvent event) {
-        try {
-            Stage secondaryStage = new Stage();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/LogInWindow.fxml"));
-            // Carga el document FXML y obtiene un objeto Parent
-            Parent root = (Parent) loader.load();
-
-            LogInWindowController controller
-                    = ((LogInWindowController) loader.getController());
-            controller.setStage(secondaryStage);
-            controller.initStage(root);
-            stage.close();
-        } catch (IOException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
-        }
+        closeWidowToSignIn();
     }
 
     @FXML
@@ -358,6 +350,24 @@ public class SignUpWindowController {
 
     public Stage getStage() {
         return stage;
+    }
+
+    private void closeWidowToSignIn() {
+        try {
+           Stage secondaryStage = new Stage();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/LogInWindow.fxml"));
+            // Carga el document FXML y obtiene un objeto Parent
+            Parent root = (Parent) loader.load();
+
+            LogInWindowController controller
+                    = ((LogInWindowController) loader.getController());
+            controller.setStage(secondaryStage);
+            controller.initStage(root);
+            stage.close();
+        } catch (IOException e) {
+            LOGGER.severe("ERROR: "+ e.getClass().getName().substring(8) +" on closing window.");
+            new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
+        }
     }
 
 }
