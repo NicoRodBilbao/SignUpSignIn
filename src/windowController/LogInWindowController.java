@@ -100,6 +100,7 @@ public class LogInWindowController {
      */
     public void logIn(ActionEvent event) {
         try {
+            LOGGER.info("Logging In user: "+tfUsername.getText());
             //En caso de que no se valide el campo de usuario con más de 30 caracteres o que haya espacios en blanco, llama al IncorrectUserException
             // El decorUsername se mostrará en rojo en caso de que falle tfUsername
             if (tfUsername.getText().length() > 30 || tfUsername.getText().contains(" ")) {
@@ -117,6 +118,7 @@ public class LogInWindowController {
                     decorPassword.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
                     throw new IncorrectPasswordException();
                 } else {
+                    LOGGER.info("User: "+tfUsername.getText()+" succesfully logged in.");
                     primaryStage.close();
                     Stage stage = new Stage();
                     // Carga el document FXML y obtiene un objeto Parent
@@ -132,6 +134,7 @@ public class LogInWindowController {
             }
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
+            LOGGER.severe(e.getMessage());
         }
 
     }
@@ -154,6 +157,7 @@ public class LogInWindowController {
             controller.initStage(root);
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
+            LOGGER.severe(e.getMessage());
         }
     }
 

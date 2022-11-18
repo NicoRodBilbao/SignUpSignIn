@@ -38,10 +38,10 @@ import exceptions.*;
 import model.*;
 
 /**
- * This window has the functionality of singing up a user on the program. It can
- * also return to the LogInWindow.
- *
- * @author Nicolás Rodríguez / Emil Nuñez
+  This window has the functionality of singing up a user on the program. It can
+  also return to the LogInWindow.
+  
+  @author Nicolás Rodríguez / Emil Nuñez
  */
 public class SignUpWindowController {
 
@@ -68,9 +68,9 @@ public class SignUpWindowController {
     private ImageView btnImgDarkMode;
 
     /**
-     * This method initializes the window.
-     *
-     * @param root There parent of all the children on the scene
+      This method initializes the window.
+     
+      @param root There parent of all the children on the scene
      */
     public void initStage(Parent root) {
         LOGGER.info("Initializing SignUp stage.");
@@ -128,10 +128,10 @@ public class SignUpWindowController {
 
     @FXML
     /**
-     * This method validates the TextfFields and executes signUp() if ir works
-     * propperly.
-     *
-     * @param event The observed event
+      This method validates the TextfFields and executes signUp() if ir works
+      propperly.
+     
+      @param event The observed event
      */
     private void handleSignUpButtonAction(ActionEvent event) {
         /*Se validará el campo tfUsername.
@@ -300,6 +300,9 @@ public class SignUpWindowController {
      */
     private void focusChanged(ObservableValue observable, Boolean oldValue, Boolean newValue) {
         if (newValue) {
+            if (btnDarkMode.isFocused()) {
+                System.err.println("A");
+            }
             if (tfUsername.isFocused()) {
                 decorUsername.setStyle("-fx-background-color:AQUA;");
             } else if (tfEmail.isFocused()) {

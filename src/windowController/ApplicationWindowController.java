@@ -49,9 +49,10 @@ public class ApplicationWindowController {
     private Button btnDarkMode;
     @FXML
     private ImageView btnImgDarkMode;
+    
 
     private Stage stage;
-
+    
     public void setStage(Stage stage) {
         this.stage = stage;
     }
@@ -75,6 +76,7 @@ public class ApplicationWindowController {
             stage.show();
         } catch (Exception e) {
             showError(e.getMessage());
+            LOGGER.severe(e.getMessage());
         }
     }
 
@@ -87,6 +89,7 @@ public class ApplicationWindowController {
                     new Tooltip("Pulsa para salir"));
         } catch (Exception e) {
             showError(e.getMessage());
+            LOGGER.severe(e.getMessage());
         }
     }
 
@@ -111,32 +114,46 @@ public class ApplicationWindowController {
             }
         } catch (Exception e) {
             showError(e.getMessage());
+            LOGGER.severe(e.getMessage());
         }
     }
 
     private void handleLogOutAction(ActionEvent event) {
         LOGGER.info("Beggining ApplicationWindowController::handleLogOutAction");
         try {
-            // Carga el document FXML y obtiene un objeto Parent
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/ui/LogInWindow.fxml"));
-            Parent root = (Parent) loader.load();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("Are you sure you want to log out?");
+            alert.showAndWait();
+            if (alert.getResult().equals(ButtonType.OK)) {
+                // Carga el document FXML y obtiene un objeto Parent
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/ui/LogInWindow.fxml"));
+                Parent root = (Parent) loader.load();
 
-            LogInWindowController controller
-                    = (LogInWindowController) loader.getController();
-            controller.setStage(stage);
-            controller.initStage(root);
+                LogInWindowController controller
+                        = (LogInWindowController) loader.getController();
+                controller.setStage(stage);
+                controller.initStage(root);
+            }
         } catch (IOException e) {
             showError(e.getMessage());
+            LOGGER.severe(e.getMessage());
         }
     }
 
     private void handleExitAction(WindowEvent event) {
         LOGGER.info("Beggining ApplicationWindowController::handleExitAction");
         try {
-            Platform.exit();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.setContentText("Are you sure you want to exit the application?");
+            alert.showAndWait();
+            if (alert.getResult().equals(ButtonType.OK)) {
+                Platform.exit();
+            }
         } catch (Exception e) {
             showError(e.getMessage());
+            LOGGER.severe(e.getMessage());
         }
     }
 
@@ -163,7 +180,12 @@ public class ApplicationWindowController {
             this.user = u;
         } catch (IncorrectUserException e) {
             showError(e.getMessage());
+            LOGGER.severe(e.getMessage());
         }
+    }
+    
+    private void confirmToGo(){
+    
     }
 
 }
