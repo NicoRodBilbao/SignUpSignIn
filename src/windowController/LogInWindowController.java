@@ -87,6 +87,7 @@ public class LogInWindowController {
         tfUsername.textProperty().addListener((event) -> this.textChange(KeyEvent.KEY_TYPED));
         tfPassword.textProperty().addListener((event) -> this.textChange(KeyEvent.KEY_TYPED));
         btnLogIn.setDisable(true);
+	btnLogIn.setDefaultButton(true);
         primaryStage.show();
 
     }
@@ -130,6 +131,14 @@ public class LogInWindowController {
                     controller.initStage(root);
                 }
             }
+        } catch (IncorrectUserException iue) {
+            new Alert(Alert.AlertType.ERROR, iue.getMessage(), ButtonType.OK).showAndWait();
+	    tfUsername.requestFocus();
+	    tfUsername.selectRange(0, tfUsername.getLength());
+        } catch (IncorrectPasswordException ipe) {
+            new Alert(Alert.AlertType.ERROR, ipe.getMessage(), ButtonType.OK).showAndWait();
+	    tfPassword.requestFocus();
+	    tfPassword.selectRange(0, tfPassword.getLength());
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
         }
